@@ -41,6 +41,7 @@ class ViewController: UIViewController, CAAnimationDelegate {
     
     private func animate() {
         //rotation 360°
+        //hi im a "prueba"
         fullRotation.delegate = self
         guard let _ = fullRotation.delegate else { return }
         fullRotation.fromValue = NSNumber(floatLiteral: 0)
