@@ -13,6 +13,7 @@
 		B10A2A322861861E00C563DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B10A2A302861861E00C563DC /* Main.storyboard */; };
 		B10A2A342861861F00C563DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10A2A332861861F00C563DC /* Assets.xcassets */; };
 		B10A2A372861861F00C563DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B10A2A352861861F00C563DC /* LaunchScreen.storyboard */; };
+		B1827CEF2863BBEB00F64B9A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1827CEE2863BBEB00F64B9A /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B10A2A332861861F00C563DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B10A2A362861861F00C563DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B10A2A382861861F00C563DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1827CEE2863BBEB00F64B9A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,10 @@
 		B10A2A292861861E00C563DC /* UnsplashImageApp */ = {
 			isa = PBXGroup;
 			children = (
+				B1827D172864E8C200F64B9A /* custom_views */,
+				B1827D162864E8A800F64B9A /* views */,
+				B1827D132864E86B00F64B9A /* domain */,
+				B1827D122864E85D00F64B9A /* data */,
 				B10A2A2A2861861E00C563DC /* AppDelegate.swift */,
 				B10A2A2C2861861E00C563DC /* SceneDelegate.swift */,
 				B10A2A2E2861861E00C563DC /* ViewController.swift */,
@@ -63,8 +69,45 @@
 				B10A2A332861861F00C563DC /* Assets.xcassets */,
 				B10A2A352861861F00C563DC /* LaunchScreen.storyboard */,
 				B10A2A382861861F00C563DC /* Info.plist */,
+				B1827CEE2863BBEB00F64B9A /* HomeViewController.swift */,
 			);
 			path = UnsplashImageApp;
+			sourceTree = "<group>";
+		};
+		B1827D122864E85D00F64B9A /* data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		B1827D132864E86B00F64B9A /* domain */ = {
+			isa = PBXGroup;
+			children = (
+				B1827D152864E88D00F64B9A /* model */,
+			);
+			path = domain;
+			sourceTree = "<group>";
+		};
+		B1827D152864E88D00F64B9A /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		B1827D162864E8A800F64B9A /* views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		B1827D172864E8C200F64B9A /* custom_views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = custom_views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +184,7 @@
 				B10A2A2F2861861E00C563DC /* ViewController.swift in Sources */,
 				B10A2A2B2861861E00C563DC /* AppDelegate.swift in Sources */,
 				B10A2A2D2861861E00C563DC /* SceneDelegate.swift in Sources */,
+				B1827CEF2863BBEB00F64B9A /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

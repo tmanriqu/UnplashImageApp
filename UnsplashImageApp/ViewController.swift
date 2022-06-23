@@ -50,9 +50,20 @@ class ViewController: UIViewController, CAAnimationDelegate {
         self.splashLogoImageView.layer.add(fullRotation, forKey: "360")
         
         //vanish the image
-        UIImageView.animate(withDuration: 2) {
+        UIImageView.animate(
+            withDuration: 2,
+            animations: {
             self.splashLogoImageView.alpha = 0
-        }
+            }) { isCompleted in
+                if isCompleted {
+                    let viewController = HomeViewController()
+                    viewController.modalTransitionStyle = .crossDissolve
+                    viewController.modalPresentationStyle = .fullScreen
+                    self.show(viewController, sender: nil)
+                    //self.navigationController?.pushViewController(viewController, animated: true)
+                    //self.present(viewController, animated: true)
+                }
+            }
     }
 }
 
