@@ -57,12 +57,15 @@ class ViewController: UIViewController, CAAnimationDelegate {
             self.splashLogoImageView.alpha = 0
             }) { isCompleted in
                 if isCompleted {
-                    let viewController = HomeViewController()
+                    
+                    let viewController = UIStoryboard.init(name: "OnBoardingViewController", bundle: nil).instantiateViewController(withIdentifier: "OnBoardingVC") as! OnBoardingViewController
+                    
+                    //let viewController = HomeViewController()
                     viewController.modalTransitionStyle = .crossDissolve
                     viewController.modalPresentationStyle = .fullScreen
-                    self.show(viewController, sender: nil)
-                    //self.navigationController?.pushViewController(viewController, animated: true)
-                    //self.present(viewController, animated: true)
+                    //self.show(viewController, sender: nil)
+                    //self.navigationController?.pushViewController(viewController, animated: true) //navigate to other viewcontroller with navigationcoller
+                    self.present(viewController, animated: true) //viewcontroller navigate to other viewcontroller
                 }
             }
     }
