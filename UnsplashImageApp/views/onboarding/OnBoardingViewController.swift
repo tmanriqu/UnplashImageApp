@@ -13,6 +13,15 @@ class OnBoardingViewController: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var nextButton: UIButton!
     var onBoardingPages: [OnBoardingPage] = []
+    var currentPage: Int = 0 {
+        didSet {
+            if currentPage == onBoardingPages.count - 1 {
+                nextButton.setTitle("Get Started", for: .normal)
+            } else {
+                nextButton.setTitle("Next", for: .normal)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,5 +64,10 @@ extension OnBoardingViewController: UICollectionViewDelegate, UICollectionViewDa
             width: collectionView.frame.width,
             height: collectionView.frame.height
         )
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let width = collectionView.frame.width
+        currentPage = Int(scrollView.contentOffset.x/width)
+        pageControl.currentPage = currentPage
     }
 }
