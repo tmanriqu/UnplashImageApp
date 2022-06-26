@@ -13,12 +13,15 @@ class OnBoardingViewController: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var nextButton: UIButton!
     var onBoardingPages: [OnBoardingPage] = []
-    var currentPage: Int = 0 {
+    var currentPage = 0 {
         didSet {
+            pageControl.currentPage = currentPage
             if currentPage == onBoardingPages.count - 1 {
+                nextButton.alpha = 1
                 nextButton.setTitle("Get Started", for: .normal)
             } else {
-                nextButton.setTitle("Next", for: .normal)
+                nextButton.alpha = 0
+                nextButton.setTitle(" ", for: .normal)
             }
         }
     }
@@ -42,8 +45,14 @@ class OnBoardingViewController: UIViewController {
                 description: "Your orders will be delivered instantly irrespective of your location around the world.",
                 image: UIImage(named: "onboarding_image_3")!)
         ]
+        pageControl.numberOfPages = onBoardingPages.count
     }
     @IBAction func nextButtonClicked(_ sender: UIButton) {
+        if currentPage != onBoardingPages.count - 1 {
+            currentPage += 1
+            let indexPath = IndexPath(item: currentPage, section: 0)
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
     }
 }
 
@@ -68,6 +77,5 @@ extension OnBoardingViewController: UICollectionViewDelegate, UICollectionViewDa
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let width = collectionView.frame.width
         currentPage = Int(scrollView.contentOffset.x/width)
-        pageControl.currentPage = currentPage
     }
 }
