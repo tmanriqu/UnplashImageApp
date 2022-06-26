@@ -33,14 +33,13 @@ class OnBoardingViewController: UIViewController {
                 description: "Your orders will be delivered instantly irrespective of your location around the world.",
                 image: UIImage(named: "onboarding_image_3")!)
         ]
-
-        // Do any additional setup after loading the view.
     }
     @IBAction func nextButtonClicked(_ sender: UIButton) {
     }
 }
 
-extension OnBoardingViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension OnBoardingViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnBoardingCollectionViewCell.indentifier, for: indexPath) as! OnBoardingCollectionViewCell
         cell.setUp(onBoardingPages[indexPath.row])
@@ -49,5 +48,12 @@ extension OnBoardingViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return onBoardingPages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(
+            width: collectionView.frame.width,
+            height: collectionView.frame.height
+        )
     }
 }
