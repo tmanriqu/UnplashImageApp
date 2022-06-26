@@ -18,6 +18,21 @@ class OnBoardingViewController: UIViewController {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        onBoardingPages = [
+            OnBoardingPage(
+                title: "Delicious Dishes",
+                description: "Experience a variety of amazing dishes from different cultures around the world.",
+                image: UIImage(named: "onboarding_image_1")!),
+            OnBoardingPage(
+                title: "World-Class Chefs",
+                description: "Our dishes are prepared by only the best.",
+                image: UIImage(named: "onboarding_image_2")!),
+            OnBoardingPage(
+                title: "Instant World-Wide Delivery",
+                description: "Your orders will be delivered instantly irrespective of your location around the world.",
+                image: UIImage(named: "onboarding_image_3")!)
+        ]
 
         // Do any additional setup after loading the view.
     }
