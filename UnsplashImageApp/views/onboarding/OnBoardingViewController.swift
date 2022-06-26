@@ -48,8 +48,11 @@ class OnBoardingViewController: UIViewController {
         pageControl.numberOfPages = onBoardingPages.count
     }
     @IBAction func nextButtonClicked(_ sender: UIButton) {
-        if currentPage != onBoardingPages.count - 1 {
-            //CONNECT TO NEXT SCREEN
+        if currentPage == onBoardingPages.count - 1 {
+            let viewController = UIStoryboard.init(name: "MainTabBarController", bundle: nil).instantiateViewController(withIdentifier: "MainTBC") as! MainTabBarController
+            viewController.modalTransitionStyle = .crossDissolve
+            viewController.modalPresentationStyle = .fullScreen
+            self.present(viewController, animated: true)
         }
     }
 }

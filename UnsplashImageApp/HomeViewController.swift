@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
         label.textAlignment = .center
         //label.textColor = .white
         label.font = .systemFont(ofSize: 24, weight: .bold)
-        label.text = "HOME"
+        label.text = "FAVORITE SCREEN"
         return label
     } ()
     
