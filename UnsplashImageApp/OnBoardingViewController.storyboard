@@ -34,17 +34,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="650"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lev-Qt-kW2">
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lev-Qt-kW2">
                                                     <rect key="frame" x="16" y="571" width="382" height="63"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="HELLO WORLD IM TITLEASDF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5J-cP-Jk9">
-                                                            <rect key="frame" x="0.0" y="0.0" width="317.5" height="26.5"/>
+                                                            <rect key="frame" x="32.5" y="0.0" width="317.5" height="26.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="black" pointSize="22"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="DESCRIPTION HELLO WORLD IM TITLE HELLO " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jDG-GS-eAv">
-                                                            <rect key="frame" x="0.0" y="42.5" width="362" height="20.5"/>
+                                                            <rect key="frame" x="10" y="42.5" width="362" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
