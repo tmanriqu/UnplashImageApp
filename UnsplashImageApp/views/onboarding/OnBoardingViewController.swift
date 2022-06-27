@@ -46,14 +46,20 @@ class OnBoardingViewController: UIViewController {
                 image: UIImage(named: "onboarding_image_3")!)
         ]
         pageControl.numberOfPages = onBoardingPages.count
+        if let layout = self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            
+            //evita que las celdas se mezclan entre cada tab
+            layout.scrollDirection = .horizontal
+            layout.minimumInteritemSpacing = 0
+            layout.minimumLineSpacing = 0
+            
+        }
     }
     @IBAction func nextButtonClicked(_ sender: UIButton) {
-        if currentPage == onBoardingPages.count - 1 {
-            let viewController = UIStoryboard.init(name: "MainTabBarController", bundle: nil).instantiateViewController(withIdentifier: "MainTBC") as! MainTabBarController
-            viewController.modalTransitionStyle = .crossDissolve
-            viewController.modalPresentationStyle = .fullScreen
-            self.present(viewController, animated: true)
-        }
+        let viewController = UIStoryboard.init(name: "MainTabBarController", bundle: nil).instantiateViewController(withIdentifier: "MainTBC") as! MainTabBarController
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true)
     }
 }
 

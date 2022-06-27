@@ -33,7 +33,6 @@ class ViewController: UIViewController, CAAnimationDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         splashLogoImageView.center = view.center
-        
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
             self.animate()
         }
