@@ -9,6 +9,7 @@ import UIKit
 import Alamofire
 
 class PhotosCollectionViewController: UICollectionViewController {
+    /*
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .orange
@@ -38,5 +39,25 @@ class PhotosCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath)
         cell.backgroundColor = .link
         return cell
+    }*/
+    
+    let urlString = "https://api.unsplash.com/search/photos?page=1&query=office&client_id=p0iRQzBsp9h4PdkWaIGQK7PcW8pzKGcFcx3G14AwGFg"
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getPhotos()
+    }
+    
+    func getPhotos() {
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            print("GOT DATA!!")
+        }
+        task.resume()
     }
 }
