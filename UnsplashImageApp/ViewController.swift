@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController, CAAnimationDelegate {
     
     let fullRotation = CABasicAnimation(keyPath: "transform.rotation")
+    let userDefaults = UserDefaults()
     
     private let splashLogoImageView: UIImageView = {
         let imageView = UIImageView(
@@ -56,15 +57,18 @@ class ViewController: UIViewController, CAAnimationDelegate {
             self.splashLogoImageView.alpha = 0
             }) { isCompleted in
                 if isCompleted {
-                    
-                    let viewController = UIStoryboard.init(name: "OnBoardingViewController", bundle: nil).instantiateViewController(withIdentifier: "OnBoardingVC") as! OnBoardingViewController
-                    
-                    //let viewController = HomeViewController()
-                    viewController.modalTransitionStyle = .crossDissolve
-                    viewController.modalPresentationStyle = .fullScreen
-                    //self.show(viewController, sender: nil)
-                    //self.navigationController?.pushViewController(viewController, animated: true) //navigate to other viewcontroller with navigationcoller
-                    self.present(viewController, animated: true) //viewcontroller navigate to other viewcontroller
+                    if let _ = self.userDefaults.value(forKey: "isOnBoardingCompleted") {
+                        let viewController = UIStoryboard.init(name: "MainTabBarController", bundle: nil).instantiateViewController(withIdentifier: "MainTBC") as! MainTabBarController
+                        viewController.modalTransitionStyle = .crossDissolve
+                        viewController.modalPresentationStyle = .fullScreen
+                        self.present(viewController, animated: true)
+                        
+                    } else {
+                        let viewController = UIStoryboard.init(name: "OnBoardingViewController", bundle: nil).instantiateViewController(withIdentifier: "OnBoardingVC") as! OnBoardingViewController
+                        viewController.modalTransitionStyle = .crossDissolve
+                        viewController.modalPresentationStyle = .fullScreen
+                        self.present(viewController, animated: true)
+                    }
                 }
             }
     }

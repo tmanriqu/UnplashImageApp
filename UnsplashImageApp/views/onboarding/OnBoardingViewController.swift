@@ -12,6 +12,7 @@ class OnBoardingViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var nextButton: UIButton!
+    let userDefaults = UserDefaults()
     var onBoardingPages: [OnBoardingPage] = []
     var currentPage = 0 {
         didSet {
@@ -56,6 +57,7 @@ class OnBoardingViewController: UIViewController {
         }
     }
     @IBAction func nextButtonClicked(_ sender: UIButton) {
+        userDefaults.setValue(true , forKey: "isOnBoardingCompleted")
         let viewController = UIStoryboard.init(name: "MainTabBarController", bundle: nil).instantiateViewController(withIdentifier: "MainTBC") as! MainTabBarController
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
