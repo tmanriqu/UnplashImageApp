@@ -51,7 +51,6 @@ class PhotosViewController: UIViewController {
         let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         guard let url = URL(string: urlString!) else {
-            print("url nil")
             return
         }
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
@@ -63,10 +62,9 @@ class PhotosViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.results = result.results
                     self?.collectionView?.reloadData()
-                    print(result.results.count)
+                    print(result.results.count) //show count images
                 }
             } catch {
-                print("ERROR API")
                 print(error)
             }
         }

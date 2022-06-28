@@ -20,7 +20,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -41,7 +40,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
         guard let url = URL(string: url) else {
             return
         }
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let data = data, error == nil else {
                 return
             }
@@ -49,7 +48,6 @@ class ItemCollectionViewCell: UICollectionViewCell {
                 let image = UIImage(data: data)
                 self?.imageView.image = image
             }
-        }
-        task.resume()
+        }.resume()
     }
 }
