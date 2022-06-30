@@ -37,6 +37,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with url: String) {
+        imageView.image = UIImage(named: "placeholder")
         guard let url = URL(string: url) else {
             return
         }

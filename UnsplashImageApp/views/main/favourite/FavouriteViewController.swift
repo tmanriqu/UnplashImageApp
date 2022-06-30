@@ -1,13 +1,13 @@
 //
-//  HomeViewController.swift
+//  FavouriteViewController.swift
 //  UnsplashImageApp
 //
-//  Created by Tavi Danner Manrique Nestarez on 22/06/22.
+//  Created by Tavi Danner Manrique Nestarez on 28/06/22.
 //
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class FavouriteViewController: UIViewController {
 
     let titleLabel: UILabel = {
         let label = UILabel(
@@ -44,5 +44,4 @@ class HomeViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

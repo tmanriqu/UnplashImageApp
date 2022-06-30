@@ -13,7 +13,7 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         viewControllers = [
             generateNavigationController(rootViewController: PhotosViewController(), title: "Photos", image: UIImage(named: "photoscollection_icon")!),
-            generateNavigationController(rootViewController: HomeViewController(), title: "Favorites", image: UIImage(named: "favorite_icon")!)
+            generateNavigationController(rootViewController: FavouriteViewController(), title: "Favourites", image: UIImage(named: "favourite_icon")!)
         ]
         
     }
