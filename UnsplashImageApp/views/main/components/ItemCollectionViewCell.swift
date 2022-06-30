@@ -17,9 +17,25 @@ class ItemCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private let checkmark: UIImageView = {
+        let image = UIImage(named: "checkmark_icon")
+        let imageView = UIImageView(image: image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.alpha = 0
+        return imageView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)
+        updateSelectedState()
+        setupCheckmark()
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            updateSelectedState()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -34,6 +50,17 @@ class ItemCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
+    }
+    
+    private func setupCheckmark() {
+        addSubview(checkmark)
+        checkmark.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -8).isActive = true
+        checkmark.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -8).isActive = true
+    }
+    
+    private func updateSelectedState() {
+        imageView.alpha = isSelected ? 0.7 : 1
+        checkmark.alpha = isSelected ? 1 : 0
     }
     
     func configure(with url: String) {

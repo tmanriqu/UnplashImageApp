@@ -63,8 +63,9 @@ class PhotosViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: ItemCollectionViewCell.identifier)
         collectionView.dataSource = self
-        view.addSubview(collectionView)
+        collectionView.allowsMultipleSelection = true
         collectionView.backgroundColor = .white.withAlphaComponent(0.15)
+        view.addSubview(collectionView)
         self.collectionView = collectionView
     }
 }
