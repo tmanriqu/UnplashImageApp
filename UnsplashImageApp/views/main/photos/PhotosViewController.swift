@@ -12,27 +12,48 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var networkDataFetcher = NetworkDataFecher()
     var results: [Result] = []
-    let searchBar = UISearchBar()
     let loadingIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTopBar()
+        setupSearchBar()
+        setupLoadingIndicator()
+        setupCollectionView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.frame = CGRect(x: 0, y: view.safeAreaInsets.top , width: view.frame.size.width, height: view.bounds.size.height - 144) //height: 659
+    }
+    
+    private func setupTopBar() {
         let titleLabel = UILabel()
         titleLabel.text = "PHOTOS"
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         titleLabel.textColor = .white
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
-        super.viewDidLoad()
+    }
+    private func setupSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+        searchController.searchBar.tintColor = .white
+        searchController.searchBar.searchTextField.textColor = .white
+        searchController.searchBar.searchTextField.leftView?.tintColor = .white
+        searchController.searchBar.placeholder = "Search here"
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesBottomBarWhenPushed = true
+        searchController.searchBar.delegate = self
+    }
+    private func setupLoadingIndicator() {
         loadingIndicator.color = .white
         loadingIndicator.isHidden = true
         loadingIndicator.center = view.center
         view.addSubview(loadingIndicator)
-        searchBar.delegate = self
-        searchBar.tintColor = .white
-        searchBar.searchTextField.textColor = .white
-        searchBar.searchTextField.leftView?.tintColor = .white
-        searchBar.placeholder = "Search here"
-        searchBar.barTintColor = .black
-        view.addSubview(searchBar)
+    }
+    private func setupCollectionView() {
         //CollectionView implement
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -46,12 +67,6 @@ class PhotosViewController: UIViewController {
         collectionView.backgroundColor = .white.withAlphaComponent(0.15)
         self.collectionView = collectionView
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        searchBar.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.frame.size.width, height: 50)
-        collectionView?.frame = CGRect(x: 0, y: view.safeAreaInsets.top + 62, width: view.frame.size.width, height: 659)
-    }
 }
 
 extension PhotosViewController: UICollectionViewDataSource {
@@ -61,7 +76,6 @@ extension PhotosViewController: UICollectionViewDataSource {
             withReuseIdentifier: ItemCollectionViewCell.identifier,
             for: indexPath
         ) as? ItemCollectionViewCell else { return UICollectionViewCell() }
-        //cell.layoutMargins = UIEdgeInsets(top: 16, left: 0, bottom: 32, right: 0)
         cell.layer.cornerRadius = 12
         cell.clipsToBounds = true
         cell.configure(with: imageUrl)
@@ -72,6 +86,8 @@ extension PhotosViewController: UICollectionViewDataSource {
         return results.count
     }
 }
+
+
 
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
