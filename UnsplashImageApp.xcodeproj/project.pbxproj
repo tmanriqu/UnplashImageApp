@@ -24,6 +24,9 @@
 		B14A5A7D286A178F00887AD7 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14A5A7C286A178F00887AD7 /* Result.swift */; };
 		B14A5A80286A183200887AD7 /* URLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14A5A7F286A183200887AD7 /* URLS.swift */; };
 		B14A5A84286A365000887AD7 /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14A5A83286A365000887AD7 /* ItemCollectionViewCell.swift */; };
+		B14D268E286E71BA00BE5EDF /* UnsplashImageDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B14D268C286E71BA00BE5EDF /* UnsplashImageDB.xcdatamodeld */; };
+		B14D2691286E750500BE5EDF /* ImageFavourite+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14D268F286E750500BE5EDF /* ImageFavourite+CoreDataClass.swift */; };
+		B14D2692286E750500BE5EDF /* ImageFavourite+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14D2690286E750500BE5EDF /* ImageFavourite+CoreDataProperties.swift */; };
 		B1A8D8CA28664DE9004E3E5A /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8D8C928664DE9004E3E5A /* OnBoardingViewController.swift */; };
 		B1A8D8CC28664EAA004E3E5A /* OnBoardingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A8D8CB28664EAA004E3E5A /* OnBoardingViewController.storyboard */; };
 		B1A8D8CF286654C4004E3E5A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8D8CE286654C4004E3E5A /* UIView+Extension.swift */; };
@@ -51,6 +54,9 @@
 		B14A5A7C286A178F00887AD7 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		B14A5A7F286A183200887AD7 /* URLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLS.swift; sourceTree = "<group>"; };
 		B14A5A83286A365000887AD7 /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		B14D268D286E71BA00BE5EDF /* UnsplashImageDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UnsplashImageDB.xcdatamodel; sourceTree = "<group>"; };
+		B14D268F286E750500BE5EDF /* ImageFavourite+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ImageFavourite+CoreDataClass.swift"; path = "/Users/tmanriqu/Documents/development/UnsplashImageApp/UnsplashImageApp/ImageFavourite+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		B14D2690286E750500BE5EDF /* ImageFavourite+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ImageFavourite+CoreDataProperties.swift"; path = "/Users/tmanriqu/Documents/development/UnsplashImageApp/UnsplashImageApp/ImageFavourite+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		B1A8D8C928664DE9004E3E5A /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		B1A8D8CB28664EAA004E3E5A /* OnBoardingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnBoardingViewController.storyboard; sourceTree = "<group>"; };
 		B1A8D8CE286654C4004E3E5A /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -91,6 +97,7 @@
 		B109EEA3286B873E005899FA /* network */ = {
 			isa = PBXGroup;
 			children = (
+				B14A5A7A286A173200887AD7 /* Response.swift */,
 				B109EEA5286B875F005899FA /* NetworkService.swift */,
 				B109EEA7286B8F7C005899FA /* NetworkDataFetcher.swift */,
 			);
@@ -118,6 +125,8 @@
 		B10A2A292861861E00C563DC /* UnsplashImageApp */ = {
 			isa = PBXGroup;
 			children = (
+				B14D268F286E750500BE5EDF /* ImageFavourite+CoreDataClass.swift */,
+				B14D2690286E750500BE5EDF /* ImageFavourite+CoreDataProperties.swift */,
 				B1A8D8CD28665492004E3E5A /* extensions */,
 				B1827D172864E8C200F64B9A /* custom_views */,
 				B1827D162864E8A800F64B9A /* views */,
@@ -132,6 +141,7 @@
 				B10A2A382861861F00C563DC /* Info.plist */,
 				B1A8D8CB28664EAA004E3E5A /* OnBoardingViewController.storyboard */,
 				B1468CBA2868CA2B009EF815 /* MainTabBarController.storyboard */,
+				B14D268C286E71BA00BE5EDF /* UnsplashImageDB.xcdatamodeld */,
 			);
 			path = UnsplashImageApp;
 			sourceTree = "<group>";
@@ -163,10 +173,17 @@
 			path = components;
 			sourceTree = "<group>";
 		};
+		B14D2693286E753000BE5EDF /* local */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = local;
+			sourceTree = "<group>";
+		};
 		B1827D122864E85D00F64B9A /* data */ = {
 			isa = PBXGroup;
 			children = (
-				B14A5A7A286A173200887AD7 /* Response.swift */,
+				B14D2693286E753000BE5EDF /* local */,
 				B109EEA3286B873E005899FA /* network */,
 			);
 			path = data;
@@ -356,9 +373,12 @@
 				B1468CB928680DD8009EF815 /* PhotosViewController.swift in Sources */,
 				B10A2A2B2861861E00C563DC /* AppDelegate.swift in Sources */,
 				B1A8D8D328666041004E3E5A /* OnBoardingCollectionViewCell.swift in Sources */,
+				B14D268E286E71BA00BE5EDF /* UnsplashImageDB.xcdatamodeld in Sources */,
 				B14A5A7D286A178F00887AD7 /* Result.swift in Sources */,
 				B109EEA8286B8F7C005899FA /* NetworkDataFetcher.swift in Sources */,
 				B10A2A2D2861861E00C563DC /* SceneDelegate.swift in Sources */,
+				B14D2692286E750500BE5EDF /* ImageFavourite+CoreDataProperties.swift in Sources */,
+				B14D2691286E750500BE5EDF /* ImageFavourite+CoreDataClass.swift in Sources */,
 				B14A5A7B286A173200887AD7 /* Response.swift in Sources */,
 				B109EEA6286B875F005899FA /* NetworkService.swift in Sources */,
 				B1A8D8CA28664DE9004E3E5A /* OnBoardingViewController.swift in Sources */,
@@ -590,6 +610,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B14D268C286E71BA00BE5EDF /* UnsplashImageDB.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B14D268D286E71BA00BE5EDF /* UnsplashImageDB.xcdatamodel */,
+			);
+			currentVersion = B14D268D286E71BA00BE5EDF /* UnsplashImageDB.xcdatamodel */;
+			path = UnsplashImageDB.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B10A2A1F2861861E00C563DC /* Project object */;
 }

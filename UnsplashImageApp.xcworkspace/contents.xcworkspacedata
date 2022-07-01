@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/tmanriqu/Documents/development/UnsplashImageApp/UnsplashImageApp/ImageFavourite+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/tmanriqu/Documents/development/UnsplashImageApp/UnsplashImageApp/ImageFavourite+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:UnsplashImageApp.xcodeproj">
    </FileRef>
    <FileRef
