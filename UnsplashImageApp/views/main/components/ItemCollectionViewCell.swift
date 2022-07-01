@@ -10,7 +10,7 @@ import UIKit
 class ItemCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ItemCollectionViewCell"
-    private let imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
@@ -62,10 +62,10 @@ class ItemCollectionViewCell: UICollectionViewCell {
         imageView.alpha = isSelected ? 0.7 : 1
         checkmark.alpha = isSelected ? 1 : 0
     }
-    
-    func configure(with url: String) {
+
+    func configure(with urlString: String) {
         imageView.image = UIImage(named: "placeholder")
-        guard let url = URL(string: url) else {
+        guard let url = URL(string: urlString) else {
             return
         }
         URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
@@ -73,8 +73,9 @@ class ItemCollectionViewCell: UICollectionViewCell {
                 return
             }
             DispatchQueue.main.async {
-                let image = UIImage(data: data)
-                self?.imageView.image = image
+                if let image = UIImage(data: data) {
+                    self?.imageView.image = image
+                }
             }
         }.resume()
     }
