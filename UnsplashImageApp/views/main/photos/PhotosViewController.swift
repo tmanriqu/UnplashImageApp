@@ -158,7 +158,10 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> aefa36a (implement add function to realm db)
         selectedImages.removeAll()
         imagesFavourite.removeAll()
         results.removeAll()
