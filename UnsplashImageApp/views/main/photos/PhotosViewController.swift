@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class PhotosViewController: UIViewController {
+    
+    let realm = try! Realm()
     
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButton))
@@ -18,6 +21,8 @@ class PhotosViewController: UIViewController {
     var results: [Result] = []
     let loadingIndicator = UIActivityIndicatorView()
     private var selectedImages = [UIImage]()
+    private var selectedUrlImages = [String]()
+    private var imagesFavourite: [ImageFavourite] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +39,18 @@ class PhotosViewController: UIViewController {
     // MARK: - TopBar icon action
     
     @objc private func addBarButton() {
+        if imagesFavourite.count == 0 {
+            print("No found favorite image")
+            return
+        }
+        realm.beginWrite()
+        imagesFavourite.forEach { imagesFavourite in
+            realm.add(imagesFavourite)
+        }
+        try! realm.commitWrite()
+        selectedImages.removeAll()
+        imagesFavourite.removeAll()
+        collectionView.reloadData()
         print(#function)
     }
     
@@ -90,12 +107,15 @@ class PhotosViewController: UIViewController {
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let imageUrl = results[indexPath.row].urls.full
+        let id = results[indexPath.row].id
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: ItemCollectionViewCell.identifier,
             for: indexPath
         ) as? ItemCollectionViewCell else { return UICollectionViewCell() }
         cell.layer.cornerRadius = 12
         cell.clipsToBounds = true
+        cell.id = id
+        cell.imageUrl = imageUrl
         cell.configure(with: imageUrl)
         return cell
     }
@@ -108,16 +128,26 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         guard let cell = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell else { return }
         if let image = cell.imageView.image {
             selectedImages.append(image)
-            print(selectedImages)
+        }
+        if let id = cell.id, let urlString = cell.imageUrl {
+            let imageFavourite = ImageFavourite()
+            imageFavourite.id = id
+            imageFavourite.imageUrl = urlString
+            imagesFavourite.append(imageFavourite)
+            print(imagesFavourite)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
         guard let image = cell.imageView.image else { return }
-        if let index = selectedImages.firstIndex(of: image) {
-            selectedImages.remove(at: index)
-            print(selectedImages)
+        if let indexImage = selectedImages.firstIndex(of: image){
+            selectedImages.remove(at: indexImage)
+        }
+        guard let id = cell.id else { return }
+        if let x = imagesFavourite.firstIndex(where: {$0.id == id}) {
+            imagesFavourite.remove(at: x)
+            print(imagesFavourite)
         }
     }
 }
@@ -127,6 +157,13 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+<<<<<<< HEAD
+=======
+        selectedImages.removeAll()
+        imagesFavourite.removeAll()
+        results.removeAll()
+        collectionView.reloadData()
+>>>>>>> aefa36a (implement add function to realm db)
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         searchBar.resignFirstResponder()

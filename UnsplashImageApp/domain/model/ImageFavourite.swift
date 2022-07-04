@@ -10,5 +10,10 @@ import RealmSwift
 
 class ImageFavourite: Object {
     @Persisted(primaryKey: true) var id: String = ""
-    @Persisted var uiImage: UIImage
+    @Persisted var imageUrl: String = ""
+}
+
+struct ImageFavouriteStruct {
+    var id: String
+    var imageUrl: String
 }

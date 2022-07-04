@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FavouriteViewController: UIViewController {
+    
+    let realm = try! Realm()
 
     let titleLabel: UILabel = {
         let label = UILabel(

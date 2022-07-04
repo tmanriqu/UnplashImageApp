@@ -10,6 +10,8 @@ import UIKit
 class ItemCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ItemCollectionViewCell"
+    var id: String?
+    var imageUrl: String?
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
