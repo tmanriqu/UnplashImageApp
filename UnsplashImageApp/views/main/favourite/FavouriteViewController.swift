@@ -30,11 +30,19 @@ class FavouriteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getImagesFavourite()
         view.backgroundColor = .yellow
         view.addSubview(titleLabel)
         titleLabel.center = view.center
 
         // Do any additional setup after loading the view.
+    }
+    
+    func getImagesFavourite() {
+        let imagesFavourite = realm.objects(ImageFavourite.self)
+        imagesFavourite.forEach { it in
+            print(it.imageUrl)
+        }
     }
     
 
