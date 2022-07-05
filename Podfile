@@ -7,5 +7,4 @@ target 'UnsplashImageApp' do
 
   # Pods for UnsplashImageApp
   pod 'RealmSwift'
-
 end
