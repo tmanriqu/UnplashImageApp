@@ -19,10 +19,13 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var networkDataFetcher = NetworkDataFecher()
     var results: [Result] = []
-    let loadingIndicator = UIActivityIndicatorView()
+    private let loadingIndicator = UIActivityIndicatorView()
     private var selectedImages = [UIImage]()
     private var selectedUrlImages = [String]()
     private var imagesFavourite: [ImageFavourite] = []
+    private var numberOfSelectedImages: Int {
+        return collectionView.indexPathsForSelectedItems?.count ?? 0
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,18 +34,13 @@ class PhotosViewController: UIViewController {
         setupLoadingIndicator()
         setupCollectionView()
     }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.frame = CGRect(x: 0, y: view.safeAreaInsets.top , width: view.frame.size.width, height: view.bounds.size.height - 144) //height: 659
     }
-    // MARK: - TopBar icon action
     
+    // MARK: - TopBar icon action
     @objc private func addBarButton() {
-        if imagesFavourite.count == 0 {
-            print("No found favorite image")
-            return
-        }
         realm.beginWrite()
         imagesFavourite.forEach { imagesFavourite in
             realm.add(imagesFavourite)
@@ -55,7 +53,6 @@ class PhotosViewController: UIViewController {
     }
     
     // MARK: - Setup UI Elements
-    
     private func setupTopBar() {
         let titleLabel = UILabel()
         titleLabel.text = "PHOTOS"
@@ -63,6 +60,7 @@ class PhotosViewController: UIViewController {
         titleLabel.textColor = .white
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
         navigationItem.rightBarButtonItem = addBarButtonItem
+        addBarButtonItem.isEnabled = false
         navigationItem.rightBarButtonItem?.tintColor = .white
     }
     private func setupSearchBar() {
@@ -100,23 +98,26 @@ class PhotosViewController: UIViewController {
         view.addSubview(collectionView)
         self.collectionView = collectionView
     }
+    // MARK: - Functions aux
+    private func updateButtonIconState() {
+        addBarButtonItem.isEnabled = numberOfSelectedImages > 0
+    }
 }
 
-// MARK: - UICollectionViewDataSource
-
+// MARK: - UICollectionViewDataSource and UICollectionViewDelegate
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let imageUrl = results[indexPath.row].urls.full
-        let id = results[indexPath.row].id
+        let imageUrl = results[indexPath.row].urls.small
+        let photoId = results[indexPath.row].id
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: ItemCollectionViewCell.identifier,
             for: indexPath
         ) as? ItemCollectionViewCell else { return UICollectionViewCell() }
         cell.layer.cornerRadius = 12
         cell.clipsToBounds = true
-        cell.id = id
+        cell.photoId = photoId
         cell.imageUrl = imageUrl
-        cell.configure(with: imageUrl)
+        cell.configureItem(with: imageUrl)
         return cell
     }
     
@@ -125,13 +126,14 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        updateButtonIconState()
         guard let cell = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell else { return }
         if let image = cell.imageView.image {
             selectedImages.append(image)
         }
-        if let id = cell.id, let urlString = cell.imageUrl {
+        if let photoId = cell.photoId, let urlString = cell.imageUrl {
             let imageFavourite = ImageFavourite()
-            imageFavourite.id = id
+            imageFavourite.photoId = photoId
             imageFavourite.imageUrl = urlString
             imagesFavourite.append(imageFavourite)
             print(imagesFavourite)
@@ -139,22 +141,21 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        updateButtonIconState()
         let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
         guard let image = cell.imageView.image else { return }
         if let indexImage = selectedImages.firstIndex(of: image){
             selectedImages.remove(at: indexImage)
         }
-        guard let id = cell.id else { return }
-        if let x = imagesFavourite.firstIndex(where: {$0.id == id}) {
-            imagesFavourite.remove(at: x)
+        guard let photoId = cell.photoId else { return }
+        if let index = imagesFavourite.firstIndex(where: {$0.photoId == photoId}) {
+            imagesFavourite.remove(at: index)
             print(imagesFavourite)
         }
     }
 }
 
-
 // MARK: - UISearchBarDelegate
-
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         selectedImages.removeAll()

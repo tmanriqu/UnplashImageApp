@@ -8,5 +8,5 @@
 import Foundation
 
 struct URLS: Codable {
-    let full: String
+    let small: String
 }
