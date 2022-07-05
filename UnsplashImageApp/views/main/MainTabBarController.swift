@@ -15,7 +15,6 @@ class MainTabBarController: UITabBarController {
             generateNavigationController(rootViewController: PhotosViewController(), title: "Photos", image: UIImage(named: "photoscollection_icon")!),
             generateNavigationController(rootViewController: FavouriteViewController(), title: "Favourites", image: UIImage(named: "favourite_icon")!)
         ]
-        
     }
     
     private func generateNavigationController(rootViewController: UIViewController, title: String, image: UIImage) -> UIViewController {

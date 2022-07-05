@@ -11,11 +11,9 @@ import RealmSwift
 class PhotosViewController: UIViewController {
     
     let realm = try! Realm()
-    
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButton))
     }()
-    
     @IBOutlet weak var collectionView: UICollectionView!
     var networkDataFetcher = NetworkDataFecher()
     var results: [Result] = []
@@ -83,7 +81,6 @@ class PhotosViewController: UIViewController {
         view.addSubview(loadingIndicator)
     }
     private func setupCollectionView() {
-        //CollectionView implement
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 24
@@ -179,5 +176,6 @@ extension PhotosViewController: UISearchBarDelegate {
         imagesFavourite.removeAll()
         results.removeAll()
         collectionView.reloadData()
+        updateButtonIconState()
     }
 }

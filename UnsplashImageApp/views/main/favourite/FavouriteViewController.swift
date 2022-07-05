@@ -94,7 +94,7 @@ class FavouriteViewController: UIViewController {
         self.collectionView = collectionView
     }
     
-    // MARK: - Functions
+    // MARK: - Functions aux
     private func getImagesFavourite() {
         imagesFavourite = []
         for imageFavourite in realm.objects(ImageFavourite.self) {

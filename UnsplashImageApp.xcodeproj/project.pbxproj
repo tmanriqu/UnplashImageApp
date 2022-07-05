@@ -130,13 +130,9 @@
 				B1827D122864E85D00F64B9A /* data */,
 				B10A2A2A2861861E00C563DC /* AppDelegate.swift */,
 				B10A2A2C2861861E00C563DC /* SceneDelegate.swift */,
-				B10A2A2E2861861E00C563DC /* ViewController.swift */,
-				B10A2A302861861E00C563DC /* Main.storyboard */,
 				B10A2A332861861F00C563DC /* Assets.xcassets */,
 				B10A2A352861861F00C563DC /* LaunchScreen.storyboard */,
 				B10A2A382861861F00C563DC /* Info.plist */,
-				B1A8D8CB28664EAA004E3E5A /* OnBoardingViewController.storyboard */,
-				B1468CBA2868CA2B009EF815 /* MainTabBarController.storyboard */,
 			);
 			path = UnsplashImageApp;
 			sourceTree = "<group>";
@@ -144,6 +140,7 @@
 		B1468CB128680BB9009EF815 /* main */ = {
 			isa = PBXGroup;
 			children = (
+				B1468CBA2868CA2B009EF815 /* MainTabBarController.storyboard */,
 				B109EEA0286B803F005899FA /* favourite */,
 				B14A5A82286A363200887AD7 /* components */,
 				B1468CB728680DC3009EF815 /* photos */,
@@ -174,6 +171,15 @@
 			children = (
 			);
 			path = local;
+			sourceTree = "<group>";
+		};
+		B15063F32874EE4D00AFA805 /* splash */ = {
+			isa = PBXGroup;
+			children = (
+				B10A2A302861861E00C563DC /* Main.storyboard */,
+				B10A2A2E2861861E00C563DC /* ViewController.swift */,
+			);
+			path = splash;
 			sourceTree = "<group>";
 		};
 		B1827D122864E85D00F64B9A /* data */ = {
@@ -207,6 +213,7 @@
 		B1827D162864E8A800F64B9A /* views */ = {
 			isa = PBXGroup;
 			children = (
+				B15063F32874EE4D00AFA805 /* splash */,
 				B1468CB128680BB9009EF815 /* main */,
 				B1A8D8C828664DA8004E3E5A /* onboarding */,
 			);
@@ -223,6 +230,7 @@
 		B1A8D8C828664DA8004E3E5A /* onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				B1A8D8CB28664EAA004E3E5A /* OnBoardingViewController.storyboard */,
 				B1A8D8C928664DE9004E3E5A /* OnBoardingViewController.swift */,
 				B1A8D8D228666041004E3E5A /* OnBoardingCollectionViewCell.swift */,
 			);

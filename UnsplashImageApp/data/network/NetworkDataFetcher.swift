@@ -9,7 +9,7 @@ import Foundation
 
 class NetworkDataFecher {
     
-    var networkService = NetworkService()
+    let networkService = NetworkService()
     func fetchImages(searchTerm: String, completion: @escaping (Response?) -> ()) {
         networkService.request(searchTerm: searchTerm) { (data, error) in
             guard let data = data, error == nil else {
@@ -22,6 +22,7 @@ class NetworkDataFecher {
                     completion(response)
                 }
             } catch {
+                completion(nil)
                 print(error)
             }
         }
