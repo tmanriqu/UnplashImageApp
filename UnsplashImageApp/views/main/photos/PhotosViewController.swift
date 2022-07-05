@@ -174,4 +174,10 @@ extension PhotosViewController: UISearchBarDelegate {
             }
         }
     }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        selectedImages.removeAll()
+        imagesFavourite.removeAll()
+        results.removeAll()
+        collectionView.reloadData()
+    }
 }

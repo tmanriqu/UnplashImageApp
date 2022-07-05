@@ -24,25 +24,25 @@ class FavouriteViewController: UIViewController {
         setupTopBar()
         setupLoadingIndicator()
         setupCollectionView()
-        // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("willAppear")
+        print("WillAppear")
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getImagesFavourite()
         collectionView.reloadData()
-        
+        updateButtonIconState()
+        print("DidAppear")
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("willDisappear")
+        print("WillDisappear")
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        print("didDisappear")
+        print("DidDisappear")
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -55,6 +55,7 @@ class FavouriteViewController: UIViewController {
         try! realm.commitWrite()
         imagesFavourite = []
         collectionView.reloadData()
+        updateButtonIconState()
         print(#function)
     }
     
@@ -100,7 +101,6 @@ class FavouriteViewController: UIViewController {
             imagesFavourite.append(imageFavourite)
         }
     }
-    // MARK: - Functions aux
     private func updateButtonIconState() {
         deleteBarButtonIcon.isEnabled = imagesFavourite.count > 0
     }
@@ -108,7 +108,7 @@ class FavouriteViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource and UICollectionViewDelegate
 extension FavouriteViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let url = imagesFavourite[indexPath.row].imageUrl
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavouriteItemCollectionViewCell.identifier, for: indexPath) as? FavouriteItemCollectionViewCell else { return UICollectionViewCell() }
