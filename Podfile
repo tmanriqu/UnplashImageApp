@@ -6,7 +6,6 @@ target 'UnsplashImageApp' do
   use_frameworks!
 
   # Pods for UnsplashImageApp
-  pod 'Alamofire', '5.6.1'
   pod 'RealmSwift'
 
 end
