@@ -89,7 +89,7 @@ class FavouriteViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         //collectionView.allowsMultipleSelection = true
-        collectionView.backgroundColor = .white.withAlphaComponent(0.15)
+        collectionView.backgroundColor = UIColor(named: "system_background")
         view.addSubview(collectionView)
         self.collectionView = collectionView
     }
