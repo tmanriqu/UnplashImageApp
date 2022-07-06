@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,14 +16,36 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_logo" translatesAutoresizingMaskIntoConstraints="NO" id="m4w-y1-pVk">
+                                <rect key="frame" x="117" y="395.5" width="180" height="105"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="105" id="1hl-cH-Z2w"/>
+                                    <constraint firstAttribute="width" constant="180" id="e4H-zg-hvC"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" white="0.14999999999999999" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="welcomescreen_background"/>
+                        <constraints>
+                            <constraint firstItem="m4w-y1-pVk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="N0r-dF-H32"/>
+                            <constraint firstItem="m4w-y1-pVk" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="z8k-hk-lwg"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hgr-U1-rNx"/>
+                    <connections>
+                        <outlet property="splashLogoImage" destination="m4w-y1-pVk" id="GvH-B9-hgv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1137.68115942029" y="16.741071428571427"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="splash_logo" width="666.5" height="383"/>
+        <namedColor name="welcomescreen_background">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

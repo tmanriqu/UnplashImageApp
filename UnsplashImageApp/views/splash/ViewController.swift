@@ -11,50 +11,33 @@ class ViewController: UIViewController, CAAnimationDelegate {
     
     let fullRotation = CABasicAnimation(keyPath: "transform.rotation")
     let userDefaults = UserDefaults()
-    
-    private let splashLogoImageView: UIImageView = {
-        let imageView = UIImageView(
-            frame: CGRect(
-                x: 0,
-                y: 0,
-                width: 180,
-                height: 105
-            )
-        )
-        imageView.image = UIImage(named: "splash_logo")
-        return imageView
-    }()
 
+    @IBOutlet weak var splashLogoImage: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(splashLogoImageView)
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        splashLogoImageView.center = view.center
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
             self.animate()
         }
     }
     
     private func animate() {
-        //rotation 360°
-        //hi im a "prueba"
         fullRotation.delegate = self
         guard let _ = fullRotation.delegate else { return }
         fullRotation.fromValue = NSNumber(floatLiteral: 0)
         fullRotation.toValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
         fullRotation.duration = 1
         fullRotation.repeatCount = 1
-        self.splashLogoImageView.layer.add(fullRotation, forKey: "360")
+        self.splashLogoImage.layer.add(fullRotation, forKey: "360")
         
         //vanish the image
         UIImageView.animate(
             withDuration: 2,
             animations: {
-            self.splashLogoImageView.alpha = 0
+            self.splashLogoImage.alpha = 0
             }) { isCompleted in
                 if isCompleted {
                     if let _ = self.userDefaults.value(forKey: "isOnBoardingCompleted") {
