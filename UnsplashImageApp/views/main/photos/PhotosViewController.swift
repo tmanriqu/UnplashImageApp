@@ -157,19 +157,10 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> aefa36a (implement add function to realm db)
-=======
->>>>>>> aefa36a (implement add function to realm db)
         selectedImages.removeAll()
         imagesFavourite.removeAll()
         results.removeAll()
         collectionView.reloadData()
->>>>>>> aefa36a (implement add function to realm db)
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         searchBar.resignFirstResponder()
