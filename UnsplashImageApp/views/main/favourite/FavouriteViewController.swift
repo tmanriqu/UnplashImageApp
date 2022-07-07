@@ -62,6 +62,7 @@ class FavouriteViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
         navigationItem.rightBarButtonItem = deleteBarButtonIcon
         deleteBarButtonIcon.isEnabled = false
+        deleteBarButtonIcon.tintColor = UIColor(named: "topbar_content")
         navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "topbar_content")
     }
     

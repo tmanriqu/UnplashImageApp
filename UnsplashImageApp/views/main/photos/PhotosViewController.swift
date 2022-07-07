@@ -15,7 +15,8 @@ class PhotosViewController: UIViewController {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButton))
     }()
     @IBOutlet weak var collectionView: UICollectionView!
-    let numberLabel = UILabel()
+    private let titleLabel = UILabel()
+    private let numberLabel = UILabel()
     var networkDataFetcher = NetworkDataFecher()
     var results: [Result] = []
     private var loadingIndicator = UIActivityIndicatorView()
@@ -57,13 +58,14 @@ class PhotosViewController: UIViewController {
     
     // MARK: - Setup UI Elements
     private func setupTopBar() {
-        let titleLabel = UILabel()
         titleLabel.text = "PHOTOS"
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         titleLabel.textColor = UIColor(named: "topbar_content")
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
         numberLabel.text = "0"
+        numberLabel.textColor = UIColor(named: "topbar_content")
         addBarButtonItem.isEnabled = false
+        addBarButtonItem.tintColor = UIColor(named: "topbar_content")
         navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "topbar_content")
         navigationItem.rightBarButtonItems = [addBarButtonItem, UIBarButtonItem.init(customView: numberLabel)]
     }
