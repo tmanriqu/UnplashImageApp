@@ -24,24 +24,11 @@ class FavouriteViewController: UIViewController {
         setupTopBar()
         setupCollectionView()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("WillAppear")
-    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getImagesFavourite()
         collectionView.reloadData()
         updateButtonIconState()
-        print("DidAppear")
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print("WillDisappear")
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print("DidDisappear")
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

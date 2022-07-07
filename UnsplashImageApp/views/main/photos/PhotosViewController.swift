@@ -168,6 +168,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         imagesFavouriteSelected.removeAll()
+        numberLabel.text = String(numberOfSelectedImages ?? 0)
         results.removeAll()
         collectionView.reloadData()
         loadingIndicator.isHidden = false
