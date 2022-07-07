@@ -19,7 +19,7 @@ class PhotosViewController: UIViewController {
     var networkDataFetcher = NetworkDataFecher()
     var results: [Result] = []
     private var loadingIndicator = UIActivityIndicatorView()
-    private var imagesFavourite: [ImageFavourite] = []
+    private var imagesFavouriteSelected: [ImageFavourite] = []
     private var numberOfSelectedImages: Int? {
         get { collectionView.indexPathsForSelectedItems?.count }
     }
@@ -41,11 +41,11 @@ class PhotosViewController: UIViewController {
     // MARK: - TopBar icon action
     @objc private func addBarButton() {
         realm.beginWrite()
-        imagesFavourite.forEach { imagesFavourite in
+        imagesFavouriteSelected.forEach { imagesFavourite in
             realm.add(imagesFavourite)
         }
         try! realm.commitWrite()
-        imagesFavourite.removeAll()
+        imagesFavouriteSelected.removeAll()
         collectionView.indexPathsForSelectedItems?.forEach {
             collectionView.deselectItem(at: $0, animated: false)
         }
@@ -147,7 +147,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
             let imageFavourite = ImageFavourite()
             imageFavourite.photoId = photoId
             imageFavourite.imageUrl = urlString
-            imagesFavourite.append(imageFavourite)
+            imagesFavouriteSelected.append(imageFavourite)
         }
         numberLabel.text = String(numberOfSelectedImages ?? 0)
         updateButtonIconState()
@@ -156,8 +156,8 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
         guard let photoId = cell.photoId else { return }
-        if let index = imagesFavourite.firstIndex(where: {$0.photoId == photoId}) {
-            imagesFavourite.remove(at: index)
+        if let index = imagesFavouriteSelected.firstIndex(where: {$0.photoId == photoId}) {
+            imagesFavouriteSelected.remove(at: index)
         }
         numberLabel.text = String(numberOfSelectedImages ?? 0)
         updateButtonIconState()
@@ -167,7 +167,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 // MARK: - UISearchBarDelegate
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        imagesFavourite.removeAll()
+        imagesFavouriteSelected.removeAll()
         results.removeAll()
         collectionView.reloadData()
         loadingIndicator.isHidden = false
@@ -183,7 +183,7 @@ extension PhotosViewController: UISearchBarDelegate {
         }
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        imagesFavourite.removeAll()
+        imagesFavouriteSelected.removeAll()
         results.removeAll()
         collectionView.reloadData()
         updateButtonIconState()
