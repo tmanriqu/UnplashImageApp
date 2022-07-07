@@ -10,6 +10,8 @@ import RealmSwift
 
 class PhotosViewController: UIViewController {
     
+    let total_page = 2000
+    var current_page = 1
     let realm = try! Realm()
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButton))
@@ -47,8 +49,9 @@ class PhotosViewController: UIViewController {
         }
         try! realm.commitWrite()
         imagesFavouriteSelected.removeAll()
-        collectionView.indexPathsForSelectedItems?.forEach {
-            collectionView.deselectItem(at: $0, animated: false)
+        collectionView.indexPathsForSelectedItems?.forEach { it in
+            print(results[it[1]])
+            collectionView.deselectItem(at: it, animated: false)
         }
         updateButtonIconState()
         numberLabel.text = String(numberOfSelectedImages!)
@@ -182,6 +185,8 @@ extension PhotosViewController: UISearchBarDelegate {
                 self.collectionView?.reloadData()
                 self.loadingIndicator.isHidden = true
                 self.loadingIndicator.stopAnimating()
+            } else {
+                self.showToast(message: "Empty result", font: .systemFont(ofSize: 18.0))
             }
         }
     }

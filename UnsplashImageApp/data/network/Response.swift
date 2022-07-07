@@ -8,7 +8,7 @@
 import Foundation
 
 struct Response: Codable {
-    let total: Int
-    let total_pages: Int
+    let total: Int?
+    let total_pages: Int?
     let results: [Result]
 }

@@ -25,18 +25,6 @@ class FavouriteViewController: UIViewController {
         setupCollectionView()
         setupAlert()
     }
-    
-    private func setupAlert() {
-        alert.addAction(UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: { [self] _ in
-            realm.beginWrite()
-            realm.delete(realm.objects(ImageFavourite.self))
-            try! realm.commitWrite()
-            imagesFavourite = []
-            collectionView.reloadData()
-            updateButtonIconState()
-        }))
-        alert.addAction(UIAlertAction(title: "NO", style: UIAlertAction.Style.cancel, handler: nil))
-    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getImagesFavourite()
@@ -76,10 +64,21 @@ class FavouriteViewController: UIViewController {
         collectionView.register(FavouriteItemCollectionViewCell.self, forCellWithReuseIdentifier: FavouriteItemCollectionViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
-        //collectionView.allowsMultipleSelection = true
+        collectionView.allowsMultipleSelection = true
         collectionView.backgroundColor = UIColor(named: "system_background")
         view.addSubview(collectionView)
         self.collectionView = collectionView
+    }
+    private func setupAlert() {
+        alert.addAction(UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: { [self] _ in
+            realm.beginWrite()
+            realm.delete(realm.objects(ImageFavourite.self))
+            try! realm.commitWrite()
+            imagesFavourite = []
+            collectionView.reloadData()
+            updateButtonIconState()
+        }))
+        alert.addAction(UIAlertAction(title: "NO", style: UIAlertAction.Style.cancel, handler: nil))
     }
     
     // MARK: - Functions aux
