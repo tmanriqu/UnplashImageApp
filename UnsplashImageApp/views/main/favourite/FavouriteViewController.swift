@@ -16,14 +16,12 @@ class FavouriteViewController: UIViewController {
     }()
     
     @IBOutlet weak var collectionView: UICollectionView!
-    private let loadingIndicator = UIActivityIndicatorView()
     private var imagesFavourite: [ImageFavourite] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "topbar_background")
         setupTopBar()
-        setupLoadingIndicator()
         setupCollectionView()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -70,13 +68,6 @@ class FavouriteViewController: UIViewController {
         navigationItem.rightBarButtonItem = deleteBarButtonIcon
         deleteBarButtonIcon.isEnabled = false
         navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "topbar_content")
-    }
-    
-    private func setupLoadingIndicator() {
-        loadingIndicator.color = UIColor(named: "loading_indicator")
-        loadingIndicator.isHidden = true
-        loadingIndicator.center = view.center
-        view.addSubview(loadingIndicator)
     }
     
     private func setupCollectionView() {

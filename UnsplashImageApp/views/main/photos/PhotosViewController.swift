@@ -15,14 +15,14 @@ class PhotosViewController: UIViewController {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButton))
     }()
     @IBOutlet weak var collectionView: UICollectionView!
+    let numberLabel = UILabel()
     var networkDataFetcher = NetworkDataFecher()
     var results: [Result] = []
     private var loadingIndicator = UIActivityIndicatorView()
     private var selectedImages = [UIImage]()
-    private var selectedUrlImages = [String]()
     private var imagesFavourite: [ImageFavourite] = []
-    private var numberOfSelectedImages: Int {
-        return collectionView.indexPathsForSelectedItems?.count ?? 0
+    private var numberOfSelectedImages: Int? {
+        get { collectionView.indexPathsForSelectedItems?.count }
     }
     
     override func viewDidLoad() {
@@ -49,6 +49,9 @@ class PhotosViewController: UIViewController {
         selectedImages.removeAll()
         imagesFavourite.removeAll()
         collectionView.reloadData()
+        updateButtonIconState()
+        numberLabel.text = String(numberOfSelectedImages!)
+        showToast(message: "Images added to favorites", font: .systemFont(ofSize: 16.0))
         print(#function)
     }
     
@@ -59,10 +62,10 @@ class PhotosViewController: UIViewController {
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         titleLabel.textColor = UIColor(named: "topbar_content")
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
-        navigationItem.rightBarButtonItem = addBarButtonItem
+        numberLabel.text = "0"
         addBarButtonItem.isEnabled = false
         navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "topbar_content")
-        
+        navigationItem.rightBarButtonItems = [addBarButtonItem, UIBarButtonItem.init(customView: numberLabel)]
     }
     private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
@@ -79,7 +82,7 @@ class PhotosViewController: UIViewController {
     }
     private func setupLoadingIndicator() {
         loadingIndicator.color = UIColor(named: "loading_indicator")
-        loadingIndicator.isHidden = true
+        loadingIndicator.isHidden = false
         loadingIndicator.center = view.center
         view.addSubview(loadingIndicator)
     }
@@ -100,7 +103,7 @@ class PhotosViewController: UIViewController {
     }
     // MARK: - Functions aux
     private func updateButtonIconState() {
-        addBarButtonItem.isEnabled = numberOfSelectedImages > 0
+        addBarButtonItem.isEnabled = numberOfSelectedImages ?? 0 > 0
     }
     private func statusBarColor(color: String) {
         if #available(iOS 13, *) {
@@ -139,7 +142,6 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        updateButtonIconState()
         guard let cell = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell else { return }
         if let image = cell.imageView.image {
             selectedImages.append(image)
@@ -149,12 +151,12 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
             imageFavourite.photoId = photoId
             imageFavourite.imageUrl = urlString
             imagesFavourite.append(imageFavourite)
-            print(imagesFavourite)
         }
+        numberLabel.text = String(numberOfSelectedImages ?? 0)
+        updateButtonIconState()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        updateButtonIconState()
         let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
         guard let image = cell.imageView.image else { return }
         if let indexImage = selectedImages.firstIndex(of: image){
@@ -163,8 +165,9 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         guard let photoId = cell.photoId else { return }
         if let index = imagesFavourite.firstIndex(where: {$0.photoId == photoId}) {
             imagesFavourite.remove(at: index)
-            print(imagesFavourite)
         }
+        numberLabel.text = String(numberOfSelectedImages ?? 0)
+        updateButtonIconState()
     }
 }
 
