@@ -21,6 +21,7 @@ class FavouriteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "topbar_background")
         setupTopBar()
         setupLoadingIndicator()
         setupCollectionView()

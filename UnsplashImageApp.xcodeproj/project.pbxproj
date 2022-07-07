@@ -213,6 +213,7 @@
 		B1827D162864E8A800F64B9A /* views */ = {
 			isa = PBXGroup;
 			children = (
+				B1ED147C28766BCC0045F2B6 /* protocols */,
 				B15063F32874EE4D00AFA805 /* splash */,
 				B1468CB128680BB9009EF815 /* main */,
 				B1A8D8C828664DA8004E3E5A /* onboarding */,
@@ -243,6 +244,13 @@
 				B1A8D8CE286654C4004E3E5A /* UIView+Extension.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		B1ED147C28766BCC0045F2B6 /* protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = protocols;
 			sourceTree = "<group>";
 		};
 		FB1661981ED5E1F1F26585FF /* Pods */ = {

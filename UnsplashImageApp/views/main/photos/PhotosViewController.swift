@@ -27,6 +27,8 @@ class PhotosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "topbar_background")
+        statusBarColor(color: "statusbar")
         setupTopBar()
         setupSearchBar()
         setupLoadingIndicator()
@@ -55,19 +57,20 @@ class PhotosViewController: UIViewController {
         let titleLabel = UILabel()
         titleLabel.text = "PHOTOS"
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        titleLabel.textColor = .white
+        titleLabel.textColor = UIColor(named: "topbar_content")
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
         navigationItem.rightBarButtonItem = addBarButtonItem
         addBarButtonItem.isEnabled = false
-        navigationItem.rightBarButtonItem?.tintColor = .white
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "topbar_content")
+        
     }
     private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
-        searchController.searchBar.tintColor = .white
-        searchController.searchBar.searchTextField.textColor = .white
-        searchController.searchBar.searchTextField.leftView?.tintColor = .white
+        searchController.searchBar.tintColor = .blue
+        searchController.searchBar.searchTextField.textColor = .red
+        searchController.searchBar.searchTextField.leftView?.tintColor = .cyan
         searchController.searchBar.placeholder = "Search here"
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
@@ -98,6 +101,19 @@ class PhotosViewController: UIViewController {
     // MARK: - Functions aux
     private func updateButtonIconState() {
         addBarButtonItem.isEnabled = numberOfSelectedImages > 0
+    }
+    private func statusBarColor(color: String) {
+        if #available(iOS 13, *) {
+            let keyWindow = UIApplication.shared.connectedScenes
+                .filter({$0.activationState == .foregroundActive})
+                .map({$0 as? UIWindowScene})
+                .compactMap({$0})
+                .first?.windows
+                .filter({$0.isKeyWindow}).first
+            let statusBar = UIView(frame: (keyWindow?.windowScene?.statusBarManager?.statusBarFrame)!)
+            statusBar.backgroundColor = UIColor(named: color)
+            keyWindow?.addSubview(statusBar)
+        }
     }
 }
 
