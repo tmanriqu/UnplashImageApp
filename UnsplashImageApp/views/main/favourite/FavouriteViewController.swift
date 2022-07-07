@@ -14,7 +14,7 @@ class FavouriteViewController: UIViewController {
     private lazy var deleteBarButtonIcon: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteBarButton))
     }()
-    
+    private let alert = UIAlertController(title: "UnsplashImageApp", message: "Are you sure you want to delete the selected images?", preferredStyle: UIAlertController.Style.alert)
     @IBOutlet weak var collectionView: UICollectionView!
     private var imagesFavourite: [ImageFavourite] = []
 
@@ -23,6 +23,19 @@ class FavouriteViewController: UIViewController {
         view.backgroundColor = UIColor(named: "topbar_background")
         setupTopBar()
         setupCollectionView()
+        setupAlert()
+    }
+    
+    private func setupAlert() {
+        alert.addAction(UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: { [self] _ in
+            realm.beginWrite()
+            realm.delete(realm.objects(ImageFavourite.self))
+            try! realm.commitWrite()
+            imagesFavourite = []
+            collectionView.reloadData()
+            updateButtonIconState()
+        }))
+        alert.addAction(UIAlertAction(title: "NO", style: UIAlertAction.Style.cancel, handler: nil))
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -36,12 +49,7 @@ class FavouriteViewController: UIViewController {
     }
     // MARK: - TopBar icon action
     @objc private func deleteBarButton() {
-        realm.beginWrite()
-        realm.delete(realm.objects(ImageFavourite.self))
-        try! realm.commitWrite()
-        imagesFavourite = []
-        collectionView.reloadData()
-        updateButtonIconState()
+        self.present(alert, animated: true, completion: nil)
         print(#function)
     }
     
