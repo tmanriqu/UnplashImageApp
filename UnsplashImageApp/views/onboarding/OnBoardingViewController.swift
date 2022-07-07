@@ -34,16 +34,16 @@ class OnBoardingViewController: UIViewController {
         
         onBoardingPages = [
             OnBoardingPage(
-                title: "Delicious Dishes",
-                description: "Experience a variety of amazing dishes from different cultures around the world.",
+                title: "GREETINGS",
+                description: "Hello! Here you can find many photos in high definition.",
                 image: UIImage(named: "onboarding_page1")!),
             OnBoardingPage(
-                title: "World-Class Chefs",
-                description: "Our dishes are prepared by only the best.",
+                title: "EXPLORE",
+                description: "Explore with different keywords so you don´t feel bored to see the same photos",
                 image: UIImage(named: "onboarding_page2")!),
             OnBoardingPage(
-                title: "Instant World-Wide Delivery",
-                description: "Your orders will be delivered instantly irrespective of your location around the world.",
+                title: "SAVE",
+                description: "And finally, you can save the photos you liked the most!",
                 image: UIImage(named: "onboarding_page3")!)
         ]
         pageControl.numberOfPages = onBoardingPages.count

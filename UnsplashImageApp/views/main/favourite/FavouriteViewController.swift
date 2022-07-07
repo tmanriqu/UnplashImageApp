@@ -69,11 +69,11 @@ class FavouriteViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
         navigationItem.rightBarButtonItem = deleteBarButtonIcon
         deleteBarButtonIcon.isEnabled = false
-        navigationItem.rightBarButtonItem?.tintColor = .white
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "topbar_content")
     }
     
     private func setupLoadingIndicator() {
-        loadingIndicator.color = .white
+        loadingIndicator.color = UIColor(named: "loading_indicator")
         loadingIndicator.isHidden = true
         loadingIndicator.center = view.center
         view.addSubview(loadingIndicator)

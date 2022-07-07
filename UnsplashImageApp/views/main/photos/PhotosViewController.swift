@@ -17,7 +17,7 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var networkDataFetcher = NetworkDataFecher()
     var results: [Result] = []
-    private let loadingIndicator = UIActivityIndicatorView()
+    private var loadingIndicator = UIActivityIndicatorView()
     private var selectedImages = [UIImage]()
     private var selectedUrlImages = [String]()
     private var imagesFavourite: [ImageFavourite] = []
@@ -68,9 +68,9 @@ class PhotosViewController: UIViewController {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
-        searchController.searchBar.tintColor = .blue
-        searchController.searchBar.searchTextField.textColor = .red
-        searchController.searchBar.searchTextField.leftView?.tintColor = .cyan
+        searchController.searchBar.tintColor = UIColor(named: "topbar_content")
+        searchController.searchBar.searchTextField.textColor = UIColor(named: "topbar_content")
+        searchController.searchBar.searchTextField.leftView?.tintColor = UIColor(named: "topbar_content")
         searchController.searchBar.placeholder = "Search here"
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
@@ -78,7 +78,7 @@ class PhotosViewController: UIViewController {
         searchController.searchBar.delegate = self
     }
     private func setupLoadingIndicator() {
-        loadingIndicator.color = .white
+        loadingIndicator.color = UIColor(named: "loading_indicator")
         loadingIndicator.isHidden = true
         loadingIndicator.center = view.center
         view.addSubview(loadingIndicator)
@@ -171,13 +171,13 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 // MARK: - UISearchBarDelegate
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
+        searchBar.resignFirstResponder()
         selectedImages.removeAll()
         imagesFavourite.removeAll()
         results.removeAll()
         collectionView.reloadData()
-        loadingIndicator.isHidden = false
-        loadingIndicator.startAnimating()
-        searchBar.resignFirstResponder()
         networkDataFetcher.fetchImages(searchTerm: searchBar.text ?? "") { (apiResponse) in
             if let apiResponse = apiResponse {
                 self.results = apiResponse.results
