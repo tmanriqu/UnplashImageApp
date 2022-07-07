@@ -36,23 +36,23 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZPe-iy-Gbo">
-                                                    <rect key="frame" x="117" y="250" width="180" height="160"/>
+                                                    <rect key="frame" x="72" y="250" width="270" height="240"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="160" id="oiV-NS-LSZ"/>
-                                                        <constraint firstAttribute="width" constant="180" id="zdo-uW-Di7"/>
+                                                        <constraint firstAttribute="height" constant="240" id="oiV-NS-LSZ"/>
+                                                        <constraint firstAttribute="width" constant="270" id="zdo-uW-Di7"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lev-Qt-kW2">
-                                                    <rect key="frame" x="16" y="530" width="382" height="47"/>
+                                                    <rect key="frame" x="16" y="550" width="382" height="54"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5J-cP-Jk9">
-                                                            <rect key="frame" x="160.5" y="0.0" width="61.5" height="26.5"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="22"/>
+                                                            <rect key="frame" x="152" y="0.0" width="78" height="33.5"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="28"/>
                                                             <color key="textColor" name="title"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HI IM DESCRIPTION" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jDG-GS-eAv">
-                                                            <rect key="frame" x="115" y="26.5" width="152" height="20.5"/>
+                                                            <rect key="frame" x="115" y="33.5" width="152" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" name="title"/>
                                                             <nil key="highlightedColor"/>
@@ -64,7 +64,7 @@
                                                 <constraint firstItem="ZPe-iy-Gbo" firstAttribute="centerX" secondItem="U6V-3L-Wsy" secondAttribute="centerX" id="535-lY-RQE"/>
                                                 <constraint firstItem="ZPe-iy-Gbo" firstAttribute="top" secondItem="U6V-3L-Wsy" secondAttribute="top" constant="250" id="5HT-cg-jdG"/>
                                                 <constraint firstAttribute="trailing" secondItem="lev-Qt-kW2" secondAttribute="trailing" constant="16" id="e7H-EA-NlA"/>
-                                                <constraint firstItem="lev-Qt-kW2" firstAttribute="top" secondItem="ZPe-iy-Gbo" secondAttribute="bottom" constant="120" id="gNK-cp-2L7"/>
+                                                <constraint firstItem="lev-Qt-kW2" firstAttribute="top" secondItem="ZPe-iy-Gbo" secondAttribute="bottom" constant="60" id="gNK-cp-2L7"/>
                                                 <constraint firstItem="lev-Qt-kW2" firstAttribute="leading" secondItem="U6V-3L-Wsy" secondAttribute="leading" constant="16" id="gXf-3r-FT3"/>
                                             </constraints>
                                         </collectionViewCellContentView>

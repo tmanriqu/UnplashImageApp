@@ -35,15 +35,15 @@ class OnBoardingViewController: UIViewController {
         onBoardingPages = [
             OnBoardingPage(
                 title: "GREETINGS",
-                description: "Hello! Here you can find many photos in high definition.",
+                description: "Hello! 👋 Here you can find many photos in high definition. 📷",
                 image: UIImage(named: "onboarding_page1")!),
             OnBoardingPage(
                 title: "EXPLORE",
-                description: "Explore with different keywords so you don´t feel bored to see the same photos",
+                description: "Explore with different keywords so you don´t feel bored to see the same photos. 👀",
                 image: UIImage(named: "onboarding_page2")!),
             OnBoardingPage(
                 title: "SAVE",
-                description: "And finally, you can save the photos you liked the most!",
+                description: "And finally, you can save the photos you liked the most! ❤️",
                 image: UIImage(named: "onboarding_page3")!)
         ]
         pageControl.numberOfPages = onBoardingPages.count
