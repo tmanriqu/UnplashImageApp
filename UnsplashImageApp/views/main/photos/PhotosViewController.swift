@@ -19,7 +19,6 @@ class PhotosViewController: UIViewController {
     var networkDataFetcher = NetworkDataFecher()
     var results: [Result] = []
     private var loadingIndicator = UIActivityIndicatorView()
-    private var selectedImages = [UIImage]()
     private var imagesFavourite: [ImageFavourite] = []
     private var numberOfSelectedImages: Int? {
         get { collectionView.indexPathsForSelectedItems?.count }
@@ -46,9 +45,10 @@ class PhotosViewController: UIViewController {
             realm.add(imagesFavourite)
         }
         try! realm.commitWrite()
-        selectedImages.removeAll()
         imagesFavourite.removeAll()
-        collectionView.reloadData()
+        collectionView.indexPathsForSelectedItems?.forEach {
+            collectionView.deselectItem(at: $0, animated: false)
+        }
         updateButtonIconState()
         numberLabel.text = String(numberOfSelectedImages!)
         showToast(message: "Images added to favorites", font: .systemFont(ofSize: 16.0))
@@ -82,7 +82,7 @@ class PhotosViewController: UIViewController {
     }
     private func setupLoadingIndicator() {
         loadingIndicator.color = UIColor(named: "loading_indicator")
-        loadingIndicator.isHidden = false
+        loadingIndicator.isHidden = true
         loadingIndicator.center = view.center
         view.addSubview(loadingIndicator)
     }
@@ -143,9 +143,6 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell else { return }
-        if let image = cell.imageView.image {
-            selectedImages.append(image)
-        }
         if let photoId = cell.photoId, let urlString = cell.imageUrl {
             let imageFavourite = ImageFavourite()
             imageFavourite.photoId = photoId
@@ -158,10 +155,6 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
-        guard let image = cell.imageView.image else { return }
-        if let indexImage = selectedImages.firstIndex(of: image){
-            selectedImages.remove(at: indexImage)
-        }
         guard let photoId = cell.photoId else { return }
         if let index = imagesFavourite.firstIndex(where: {$0.photoId == photoId}) {
             imagesFavourite.remove(at: index)
@@ -174,13 +167,12 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 // MARK: - UISearchBarDelegate
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        loadingIndicator.isHidden = false
-        loadingIndicator.startAnimating()
-        searchBar.resignFirstResponder()
-        selectedImages.removeAll()
         imagesFavourite.removeAll()
         results.removeAll()
         collectionView.reloadData()
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
+        searchBar.resignFirstResponder()
         networkDataFetcher.fetchImages(searchTerm: searchBar.text ?? "") { (apiResponse) in
             if let apiResponse = apiResponse {
                 self.results = apiResponse.results
@@ -191,7 +183,6 @@ extension PhotosViewController: UISearchBarDelegate {
         }
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        selectedImages.removeAll()
         imagesFavourite.removeAll()
         results.removeAll()
         collectionView.reloadData()
