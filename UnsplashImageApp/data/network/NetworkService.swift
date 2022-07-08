@@ -26,7 +26,7 @@ class NetworkService {
     private func prepareParameters(searchTerm: String?) -> [String: String] {
         var parameters: [String: String] = [:]
         parameters["page"] = String(1)
-        parameters["per_page"] = String(30)
+        parameters["per_page"] = String(5)
         parameters["query"] = searchTerm
         return parameters
     }

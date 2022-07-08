@@ -18,12 +18,24 @@ class MainTabBarController: UITabBarController {
     }
     
     private func generateNavigationController(rootViewController: UIViewController, title: String, image: UIImage) -> UIViewController {
+        
+        let tabBarApperance = UITabBarAppearance()
+        tabBarApperance.shadowColor = .clear
+        tabBarApperance.backgroundColor = UIColor(named: "topbar_background")
+        let appearance = UINavigationBarAppearance()
+        appearance.shadowColor = .clear
+        appearance.backgroundColor = UIColor(named: "topbar_background")
         let navigationVC = UINavigationController(rootViewController: rootViewController)
-        navigationVC.tabBarItem.badgeColor = .blue
-        navigationVC.navigationBar.barTintColor = .red
         navigationVC.navigationBar.isTranslucent = false
+        if #available(iOS 15.0, *) {
+            navigationVC.tabBarItem.standardAppearance = tabBarApperance
+            navigationVC.tabBarItem.scrollEdgeAppearance = tabBarApperance
+        } 
+        navigationVC.navigationBar.standardAppearance = appearance
+        navigationVC.navigationBar.scrollEdgeAppearance = appearance
         navigationVC.tabBarItem.title = title
         navigationVC.tabBarItem.image = image
+        navigationVC.tabBarItem.badgeColor = .red
         return navigationVC
     }
 }

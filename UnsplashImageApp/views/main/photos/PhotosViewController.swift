@@ -29,8 +29,7 @@ class PhotosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "topbar_background")
-        setupApperance()
+        view.backgroundColor = UIColor(named: "system_background")
         statusBarColor(color: "statusbar")
         setupTopBar()
         setupSearchBar()
@@ -39,13 +38,7 @@ class PhotosViewController: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.frame = CGRect(x: 0, y: view.safeAreaInsets.top , width: view.frame.size.width, height: view.bounds.size.height) //height: 659
-    }
-    private func setupApperance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor(named: "topbar_background")
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        collectionView.frame = CGRect(x: 0, y: view.safeAreaInsets.top + 16, width: view.frame.size.width, height: view.frame.size.height - 32) //height: 659
     }
     // MARK: - TopBar icon action
     @objc private func addBarButton() {
