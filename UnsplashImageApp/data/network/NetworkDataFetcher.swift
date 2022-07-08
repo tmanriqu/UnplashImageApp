@@ -10,8 +10,8 @@ import Foundation
 class NetworkDataFecher {
     
     let networkService = NetworkService()
-    func fetchImages(searchTerm: String, completion: @escaping (Response?) -> ()) {
-        networkService.request(searchTerm: searchTerm) { (data, error) in
+    func fetchImages(searchTerm: String, page: Int, completion: @escaping (Response?) -> ()) {
+        networkService.request(searchTerm: searchTerm, page: page) { (data, error) in
             guard let data = data, error == nil else {
                 completion(nil)
                 return 

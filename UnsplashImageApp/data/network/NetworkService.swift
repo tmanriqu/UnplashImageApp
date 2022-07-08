@@ -8,8 +8,8 @@
 import Foundation
 
 class NetworkService {
-    func request(searchTerm: String, completion: @escaping (Data?, Error?) -> Void) {
-        let parameters = self.prepareParameters(searchTerm: searchTerm)
+    func request(searchTerm: String, page: Int, completion: @escaping (Data?, Error?) -> Void) {
+        let parameters = self.prepareParameters(searchTerm: searchTerm, page: page)
         let url = self.url(parameters: parameters)
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = prepareHeader()
@@ -23,9 +23,9 @@ class NetworkService {
         return headers
     }
     
-    private func prepareParameters(searchTerm: String?) -> [String: String] {
+    private func prepareParameters(searchTerm: String?, page: Int) -> [String: String] {
         var parameters: [String: String] = [:]
-        parameters["page"] = String(1)
+        parameters["page"] = String(page)
         parameters["per_page"] = String(5)
         parameters["query"] = searchTerm
         return parameters

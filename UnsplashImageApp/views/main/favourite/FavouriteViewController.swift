@@ -40,7 +40,9 @@ class FavouriteViewController: UIViewController {
     }
     // MARK: - TopBar icon action
     @objc private func deleteBarButton() {
-        self.present(alert, animated: true, completion: nil)
+        if (numberOfSelectedImagesFavourite != 0) {
+            self.present(alert, animated: true, completion: nil)
+        }
         print(#function)
     }
     
@@ -73,14 +75,29 @@ class FavouriteViewController: UIViewController {
         self.collectionView = collectionView
     }
     private func setupAlert() {
-        alert.addAction(UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: { [self] _ in
-            realm.beginWrite()
-            realm.delete(realm.objects(ImageFavourite.self))
-            try! realm.commitWrite()
-            imagesFavourite = []
-            collectionView.reloadData()
-            updateButtonIconState()
-        }))
+        alert.addAction(
+            UIAlertAction(
+                title: "YES",
+                style: UIAlertAction.Style.default,
+                handler: { [self] _ in
+                    /*
+                    realm.beginWrite()
+                    realm.delete(realm.objects(ImageFavourite.self))
+                    try! realm.commitWrite()
+                    imagesFavourite = []
+                    collectionView.reloadData()
+                    updateButtonIconState()*/
+                    realm.beginWrite()
+                    collectionView.indexPathsForSelectedItems?.forEach { indexPath in
+                        realm.delete(imagesFavourite[indexPath[1]])
+                        imagesFavourite.remove(at: indexPath[1])
+                    }
+                    try! realm.commitWrite()
+                    collectionView.reloadData()
+                    updateButtonIconState()
+                }
+            )
+        )
         alert.addAction(UIAlertAction(title: "NO", style: UIAlertAction.Style.cancel, handler: nil))
     }
     
@@ -92,7 +109,7 @@ class FavouriteViewController: UIViewController {
         }
     }
     private func updateButtonIconState() {
-        deleteBarButtonIcon.isEnabled = imagesFavourite.count > 0
+        deleteBarButtonIcon.isEnabled = numberOfSelectedImagesFavourite ?? 0 > 0
     }
 }
 
@@ -108,5 +125,13 @@ extension FavouriteViewController: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imagesFavourite.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        updateButtonIconState()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        updateButtonIconState()
     }
 }

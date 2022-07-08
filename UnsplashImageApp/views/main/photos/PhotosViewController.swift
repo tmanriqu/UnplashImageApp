@@ -165,11 +165,29 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         numberLabel.text = String(numberOfSelectedImages ?? 0)
         updateButtonIconState()
     }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        /*
+        if current_page < total_page && indexPath.row == results.count - 1 {
+            current_page = current_page + 1
+            networkDataFetcher.fetchImages(searchTerm: "Cat", page: current_page) { (apiResponse) in
+                if let apiResponse = apiResponse {
+                    self.results.append(contentsOf: apiResponse.results)
+                    self.collectionView?.reloadSections(indexPath)
+                } else {
+                    self.showToast(message: "Empty result", font: .systemFont(ofSize: 18.0))
+                }
+            }
+        }*/
+        if current_page < total_page && indexPath.row == results.count - 1  {
+            print("call api")
+        }
+    }
 }
 
 // MARK: - UISearchBarDelegate
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        current_page = 1
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         searchBar.resignFirstResponder()
@@ -177,7 +195,7 @@ extension PhotosViewController: UISearchBarDelegate {
         numberLabel.text = String(numberOfSelectedImages ?? 0)
         results.removeAll()
         collectionView.reloadData()
-        networkDataFetcher.fetchImages(searchTerm: searchBar.text ?? "") { (apiResponse) in
+        networkDataFetcher.fetchImages(searchTerm: searchBar.text ?? "", page: current_page) { (apiResponse) in
             if let apiResponse = apiResponse {
                 self.results = apiResponse.results
                 self.collectionView?.reloadData()
