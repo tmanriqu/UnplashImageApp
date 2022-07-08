@@ -104,9 +104,6 @@
                         <viewLayoutGuide key="safeArea" id="gD1-7I-Fru"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="3TG-dD-9JS"/>
-                    <connections>
-                        <outlet property="collectionView" destination="7ch-sI-Fiv" id="I3c-MW-OgE"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UcT-aa-GmS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -16,7 +16,7 @@ class PhotosViewController: UIViewController {
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButton))
     }()
-    @IBOutlet weak var collectionView: UICollectionView!
+    private var collectionView: UICollectionView!
     private let titleLabel = UILabel()
     private let numberLabel = UILabel()
     var networkDataFetcher = NetworkDataFecher()
@@ -24,23 +24,29 @@ class PhotosViewController: UIViewController {
     private var loadingIndicator = UIActivityIndicatorView()
     private var imagesFavouriteSelected: [ImageFavourite] = []
     private var numberOfSelectedImages: Int? {
-        get { collectionView.indexPathsForSelectedItems?.count }
+        get { collectionView?.indexPathsForSelectedItems?.count }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "topbar_background")
+        setupApperance()
         statusBarColor(color: "statusbar")
         setupTopBar()
         setupSearchBar()
-        setupLoadingIndicator()
         setupCollectionView()
+        setupLoadingIndicator()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.frame = CGRect(x: 0, y: view.safeAreaInsets.top , width: view.frame.size.width, height: view.bounds.size.height - 144) //height: 659
+        collectionView.frame = CGRect(x: 0, y: view.safeAreaInsets.top , width: view.frame.size.width, height: view.bounds.size.height) //height: 659
     }
-    
+    private func setupApperance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(named: "topbar_background")
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
     // MARK: - TopBar icon action
     @objc private func addBarButton() {
         realm.beginWrite()
@@ -87,7 +93,7 @@ class PhotosViewController: UIViewController {
     }
     private func setupLoadingIndicator() {
         loadingIndicator.color = UIColor(named: "loading_indicator")
-        loadingIndicator.isHidden = true
+        loadingIndicator.isHidden = false
         loadingIndicator.center = view.center
         view.addSubview(loadingIndicator)
     }
@@ -97,14 +103,13 @@ class PhotosViewController: UIViewController {
         layout.minimumLineSpacing = 24
         layout.minimumInteritemSpacing = 0
         layout.itemSize = CGSize(width: view.frame.size.width - 48, height: view.frame.size.height/2)
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: ItemCollectionViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.allowsMultipleSelection = true
         collectionView.backgroundColor = UIColor(named: "system_background")
         view.addSubview(collectionView)
-        self.collectionView = collectionView
     }
     // MARK: - Functions aux
     private func updateButtonIconState() {
@@ -172,18 +177,17 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 // MARK: - UISearchBarDelegate
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
+        searchBar.resignFirstResponder()
         imagesFavouriteSelected.removeAll()
         numberLabel.text = String(numberOfSelectedImages ?? 0)
         results.removeAll()
         collectionView.reloadData()
-        loadingIndicator.isHidden = false
-        loadingIndicator.startAnimating()
-        searchBar.resignFirstResponder()
         networkDataFetcher.fetchImages(searchTerm: searchBar.text ?? "") { (apiResponse) in
             if let apiResponse = apiResponse {
                 self.results = apiResponse.results
                 self.collectionView?.reloadData()
-                self.loadingIndicator.isHidden = true
                 self.loadingIndicator.stopAnimating()
             } else {
                 self.showToast(message: "Empty result", font: .systemFont(ofSize: 18.0))

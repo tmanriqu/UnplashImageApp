@@ -17,6 +17,9 @@ class FavouriteViewController: UIViewController {
     private let alert = UIAlertController(title: "UnsplashImageApp", message: "Are you sure you want to delete the selected images?", preferredStyle: UIAlertController.Style.alert)
     @IBOutlet weak var collectionView: UICollectionView!
     private var imagesFavourite: [ImageFavourite] = []
+    private var numberOfSelectedImagesFavourite: Int? {
+        get { collectionView.indexPathsForSelectedItems?.count }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +36,7 @@ class FavouriteViewController: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.frame = CGRect(x: 0, y: view.safeAreaInsets.top , width: view.frame.size.width, height: view.frame.size.height - 92) //height: 659
+        collectionView.frame = CGRect(x: 0, y: view.safeAreaInsets.top , width: view.frame.size.width, height: view.frame.size.height) //height: 659
     }
     // MARK: - TopBar icon action
     @objc private func deleteBarButton() {
