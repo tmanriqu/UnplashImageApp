@@ -12,8 +12,8 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewControllers = [
-            generateNavigationController(rootViewController: PhotosViewController(), title: "Photos", image: UIImage(named: "photoscollection_icon")!),
-            generateNavigationController(rootViewController: FavouriteViewController(), title: "Favourites", image: UIImage(named: "favourite_icon")!)
+            generateNavigationController(rootViewController: PhotosViewController(), title: "Photos".localized(), image: UIImage(named: "photoscollection_icon")!),
+            generateNavigationController(rootViewController: FavouriteViewController(), title: "Favourites".localized(), image: UIImage(named: "favourite_icon")!)
         ]
     }
     

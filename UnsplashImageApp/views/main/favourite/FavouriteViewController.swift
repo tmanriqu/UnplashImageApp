@@ -14,7 +14,7 @@ class FavouriteViewController: UIViewController {
     private lazy var deleteBarButtonIcon: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteBarButton))
     }()
-    private let alert = UIAlertController(title: "UnsplashImageApp", message: "Are you sure you want to delete the selected images?", preferredStyle: UIAlertController.Style.alert)
+    private let alert = UIAlertController(title: "UnsplashImageApp", message: "Are you sure you want to delete the selected images?".localized(), preferredStyle: UIAlertController.Style.alert)
     @IBOutlet weak var collectionView: UICollectionView!
     private var imagesFavourite: [ImageFavourite] = []
     private var numberOfSelectedImagesFavourite: Int? {
@@ -49,7 +49,7 @@ class FavouriteViewController: UIViewController {
     // MARK: - Setup UI Elements
     private func setupTopBar() {
         let titleLabel = UILabel()
-        titleLabel.text = "FAVOURITES"
+        titleLabel.text = "FAVOURITES".localized()
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         titleLabel.textColor = .white
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
@@ -77,7 +77,7 @@ class FavouriteViewController: UIViewController {
     private func setupAlert() {
         alert.addAction(
             UIAlertAction(
-                title: "YES",
+                title: "YES".localized(),
                 style: UIAlertAction.Style.default,
                 handler: { [self] _ in
                     realm.beginWrite()
@@ -92,7 +92,7 @@ class FavouriteViewController: UIViewController {
                 }
             )
         )
-        alert.addAction(UIAlertAction(title: "NO", style: UIAlertAction.Style.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "NO".localized(), style: UIAlertAction.Style.cancel, handler: nil))
     }
     
     // MARK: - Functions aux

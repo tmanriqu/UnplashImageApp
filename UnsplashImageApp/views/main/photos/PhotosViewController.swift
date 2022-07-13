@@ -55,13 +55,13 @@ class PhotosViewController: UIViewController {
         }
         updateButtonIconState()
         numberLabel.text = String(numberOfSelectedImages!)
-        showToast(message: "Images added to favorites", font: .systemFont(ofSize: 16.0))
+        showToast(message: "Images added to favorites".localized(), font: .systemFont(ofSize: 16.0))
         print(#function)
     }
     
     // MARK: - Setup UI Elements
     private func setupTopBar() {
-        titleLabel.text = "PHOTOS"
+        titleLabel.text = "PHOTOS".localized()
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         titleLabel.textColor = UIColor(named: "topbar_content")
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
@@ -79,7 +79,7 @@ class PhotosViewController: UIViewController {
         searchController.searchBar.tintColor = UIColor(named: "topbar_content")
         searchController.searchBar.searchTextField.textColor = UIColor(named: "topbar_content")
         searchController.searchBar.searchTextField.leftView?.tintColor = UIColor(named: "topbar_content")
-        searchController.searchBar.placeholder = "Search here"
+        searchController.searchBar.placeholder = "Search here".localized()
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesBottomBarWhenPushed = true
@@ -174,7 +174,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
                     self.results.append(contentsOf: apiResponse.results)
                     self.collectionView.reloadData()
                 } else {
-                    self.showToast(message: "Empty result", font: .systemFont(ofSize: 18.0))
+                    self.showToast(message: "Empty result".localized(), font: .systemFont(ofSize: 18.0))
                 }
             }
         }
@@ -199,7 +199,7 @@ extension PhotosViewController: UISearchBarDelegate {
                 self.collectionView?.reloadData()
                 self.loadingIndicator.stopAnimating()
             } else {
-                self.showToast(message: "Empty result", font: .systemFont(ofSize: 18.0))
+                self.showToast(message: "Empty result".localized(), font: .systemFont(ofSize: 18.0))
             }
         }
     }

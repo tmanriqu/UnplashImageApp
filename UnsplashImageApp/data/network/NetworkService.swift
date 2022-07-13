@@ -27,7 +27,7 @@ class NetworkService {
         var parameters: [String: String] = [:]
         parameters["page"] = String(page)
         parameters["per_page"] = String(5)
-        parameters["query"] = searchTerm
+        parameters["query"] = searchTerm?.lowercased()
         return parameters
     }
     

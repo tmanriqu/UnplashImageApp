@@ -19,7 +19,7 @@ class OnBoardingViewController: UIViewController {
             pageControl.currentPage = currentPage
             if currentPage == onBoardingPages.count - 1 {
                 nextButton.alpha = 1
-                nextButton.setTitle("Get Started", for: .normal)
+                nextButton.setTitle("Get Started".localized(), for: .normal)
             } else {
                 nextButton.alpha = 0
                 nextButton.setTitle(" ", for: .normal)
@@ -35,15 +35,15 @@ class OnBoardingViewController: UIViewController {
         onBoardingPages = [
             OnBoardingPage(
                 title: "GREETINGS".localized(),
-                description: "Hello! 👋 Here you can find many photos in high definition. 📷",
+                description: "Hello! 👋 Here you can find many photos in high definition. 📷".localized(),
                 image: UIImage(named: "onboarding_page1")!),
             OnBoardingPage(
-                title: "EXPLORE",
-                description: "Explore with different keywords so you don´t feel bored to see the same photos. 👀",
+                title: "EXPLORE".localized(),
+                description: "Explore with different keywords so you don´t feel bored to see the same photos. 👀".localized(),
                 image: UIImage(named: "onboarding_page2")!),
             OnBoardingPage(
-                title: "SAVE",
-                description: "And finally, you can save the photos you liked the most! ❤️",
+                title: "SAVE".localized(),
+                description: "And finally, you can save the photos you liked the most! ❤️".localized(),
                 image: UIImage(named: "onboarding_page3")!)
         ]
         pageControl.numberOfPages = onBoardingPages.count
