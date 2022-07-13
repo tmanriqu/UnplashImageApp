@@ -9,7 +9,6 @@ import Foundation
 import RealmSwift
 
 class ImageFavourite: Object {
-    @Persisted(primaryKey: true) var id = UUID().uuidString
-    @Persisted var photoId: String = ""
+    @Persisted(primaryKey: true) var id: String = ""
     @Persisted var imageUrl: String = ""
 }

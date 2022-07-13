@@ -13,16 +13,22 @@ class PhotosViewController: UIViewController {
     let total_page = 2000
     var current_page = 1
     var query = ""
+    
     let realm = try! Realm()
+    
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButton))
     }()
     private var collectionView: UICollectionView!
     private let titleLabel = UILabel()
     private let numberLabel = UILabel()
+    private var loadingIndicator = UIActivityIndicatorView()
+    
     var networkDataFetcher = NetworkDataFecher()
     var results: [Result] = []
-    private var loadingIndicator = UIActivityIndicatorView()
+    var filter: [String] {
+        get { obtainIds() }
+    }
     private var imagesFavouriteSelected: [ImageFavourite] = []
     private var numberOfSelectedImages: Int? {
         get { collectionView?.indexPathsForSelectedItems?.count }
@@ -52,10 +58,12 @@ class PhotosViewController: UIViewController {
         collectionView.indexPathsForSelectedItems?.forEach { it in
             print(results[it[1]])
             collectionView.deselectItem(at: it, animated: false)
+            collectionView.deleteItems(at: [it])
         }
         updateButtonIconState()
         numberLabel.text = String(numberOfSelectedImages!)
         showToast(message: "Images added to favorites".localized(), font: .systemFont(ofSize: 16.0))
+        results = results.filter({ !self.filter.contains($0.id)})
         print(#function)
     }
     
@@ -122,6 +130,13 @@ class PhotosViewController: UIViewController {
             keyWindow?.addSubview(statusBar)
         }
     }
+    func obtainIds() -> [String] {
+        var ids: [String] = []
+        for imageFavourite in realm.objects(ImageFavourite.self) {
+            ids.append(imageFavourite.id)
+        }
+        return ids
+    }
 }
 
 // MARK: - UICollectionViewDataSource and UICollectionViewDelegate
@@ -149,7 +164,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         guard let cell = collectionView.cellForItem(at: indexPath) as? ItemCollectionViewCell else { return }
         if let photoId = cell.photoId, let urlString = cell.imageUrl {
             let imageFavourite = ImageFavourite()
-            imageFavourite.photoId = photoId
+            imageFavourite.id = photoId
             imageFavourite.imageUrl = urlString
             imagesFavouriteSelected.append(imageFavourite)
         }
@@ -160,7 +175,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
         guard let photoId = cell.photoId else { return }
-        if let index = imagesFavouriteSelected.firstIndex(where: {$0.photoId == photoId}) {
+        if let index = imagesFavouriteSelected.firstIndex(where: {$0.id == photoId}) {
             imagesFavouriteSelected.remove(at: index)
         }
         numberLabel.text = String(numberOfSelectedImages ?? 0)
@@ -193,12 +208,13 @@ extension PhotosViewController: UISearchBarDelegate {
         numberLabel.text = String(numberOfSelectedImages ?? 0)
         results.removeAll()
         collectionView.reloadData()
-        networkDataFetcher.fetchImages(searchTerm: query, page: current_page) { (apiResponse) in
+        networkDataFetcher.fetchImages(searchTerm: query, page: current_page) { [self] (apiResponse) in
             if let apiResponse = apiResponse {
-                self.results = apiResponse.results
+                self.results = apiResponse.results.filter({ !self.filter.contains($0.id)})
                 self.collectionView?.reloadData()
                 self.loadingIndicator.stopAnimating()
-            } else {
+            }
+            else {
                 self.showToast(message: "Empty result".localized(), font: .systemFont(ofSize: 18.0))
             }
         }
