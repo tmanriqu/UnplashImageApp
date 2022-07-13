@@ -12,6 +12,7 @@ class PhotosViewController: UIViewController {
     
     let total_page = 2000
     var current_page = 1
+    var query = ""
     let realm = try! Realm()
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButton))
@@ -86,7 +87,7 @@ class PhotosViewController: UIViewController {
     }
     private func setupLoadingIndicator() {
         loadingIndicator.color = UIColor(named: "loading_indicator")
-        loadingIndicator.isHidden = false
+        loadingIndicator.isHidden = true
         loadingIndicator.center = view.center
         view.addSubview(loadingIndicator)
     }
@@ -166,20 +167,16 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         updateButtonIconState()
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        /*
-        if current_page < total_page && indexPath.row == results.count - 1 {
+        if numberOfSelectedImages == 0 && indexPath.row == results.count - 1 && current_page < total_page {
             current_page = current_page + 1
-            networkDataFetcher.fetchImages(searchTerm: "Cat", page: current_page) { (apiResponse) in
+            networkDataFetcher.fetchImages(searchTerm: query, page: current_page) { (apiResponse) in
                 if let apiResponse = apiResponse {
                     self.results.append(contentsOf: apiResponse.results)
-                    self.collectionView?.reloadSections(indexPath)
+                    self.collectionView.reloadData()
                 } else {
                     self.showToast(message: "Empty result", font: .systemFont(ofSize: 18.0))
                 }
             }
-        }*/
-        if current_page < total_page && indexPath.row == results.count - 1  {
-            print("call api")
         }
     }
 }
@@ -187,15 +184,16 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
 // MARK: - UISearchBarDelegate
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        current_page = 1
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
+        current_page = 1
+        query = searchBar.text ?? ""
         searchBar.resignFirstResponder()
         imagesFavouriteSelected.removeAll()
         numberLabel.text = String(numberOfSelectedImages ?? 0)
         results.removeAll()
         collectionView.reloadData()
-        networkDataFetcher.fetchImages(searchTerm: searchBar.text ?? "", page: current_page) { (apiResponse) in
+        networkDataFetcher.fetchImages(searchTerm: query, page: current_page) { (apiResponse) in
             if let apiResponse = apiResponse {
                 self.results = apiResponse.results
                 self.collectionView?.reloadData()

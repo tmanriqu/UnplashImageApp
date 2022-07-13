@@ -80,19 +80,13 @@ class FavouriteViewController: UIViewController {
                 title: "YES",
                 style: UIAlertAction.Style.default,
                 handler: { [self] _ in
-                    /*
-                    realm.beginWrite()
-                    realm.delete(realm.objects(ImageFavourite.self))
-                    try! realm.commitWrite()
-                    imagesFavourite = []
-                    collectionView.reloadData()
-                    updateButtonIconState()*/
                     realm.beginWrite()
                     collectionView.indexPathsForSelectedItems?.forEach { indexPath in
                         realm.delete(imagesFavourite[indexPath[1]])
-                        imagesFavourite.remove(at: indexPath[1])
+                        //imagesFavourite.remove(at: indexPath[1])
                     }
                     try! realm.commitWrite()
+                    getImagesFavourite()
                     collectionView.reloadData()
                     updateButtonIconState()
                 }

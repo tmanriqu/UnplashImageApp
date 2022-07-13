@@ -34,7 +34,7 @@ class OnBoardingViewController: UIViewController {
         
         onBoardingPages = [
             OnBoardingPage(
-                title: "GREETINGS",
+                title: "GREETINGS".localized(),
                 description: "Hello! 👋 Here you can find many photos in high definition. 📷",
                 image: UIImage(named: "onboarding_page1")!),
             OnBoardingPage(
