@@ -12,7 +12,7 @@ class FavouriteViewController: UIViewController {
     
     let realm = try! Realm()
     private lazy var deleteBarButtonIcon: UIBarButtonItem = {
-        return UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(deleteBarButton))
+        return UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteBarButton))
     }()
     private let alert = UIAlertController(title: "UnsplashImageApp", message: "Are you sure you want to delete the selected images?".localized(), preferredStyle: UIAlertController.Style.alert)
     @IBOutlet weak var collectionView: UICollectionView!

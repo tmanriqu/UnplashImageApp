@@ -10,7 +10,7 @@ import RealmSwift
 
 class PhotosViewController: UIViewController {
     
-    let total_page = 2000
+    let total_page = 1000
     var current_page = 1
     var query = ""
     
@@ -30,6 +30,9 @@ class PhotosViewController: UIViewController {
         get { obtainIds() }
     }
     private var imagesFavouriteSelected: [ImageFavourite] = []
+    private var numberOfItems: Int {
+        get { results.count }
+    }
     private var numberOfSelectedImages: Int? {
         get { collectionView?.indexPathsForSelectedItems?.count }
     }
@@ -56,7 +59,6 @@ class PhotosViewController: UIViewController {
         try! realm.commitWrite()
         imagesFavouriteSelected.removeAll()
         collectionView.indexPathsForSelectedItems?.forEach { it in
-            print(results[it[1]])
             collectionView.deselectItem(at: it, animated: false)
             collectionView.deleteItems(at: [it])
         }
@@ -64,6 +66,10 @@ class PhotosViewController: UIViewController {
         numberLabel.text = String(numberOfSelectedImages!)
         showToast(message: "Images added to favorites".localized(), font: .systemFont(ofSize: 16.0))
         results = results.filter({ !self.filter.contains($0.id)})
+        if (results.count == 0) {
+            current_page = current_page + 1
+            callApi(query: query, page: current_page)
+        }
         print(#function)
     }
     
@@ -82,16 +88,17 @@ class PhotosViewController: UIViewController {
     }
     private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
-        navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
         searchController.searchBar.tintColor = UIColor(named: "topbar_content")
         searchController.searchBar.searchTextField.textColor = UIColor(named: "topbar_content")
         searchController.searchBar.searchTextField.leftView?.tintColor = UIColor(named: "topbar_content")
         searchController.searchBar.placeholder = "Search here".localized()
+        searchController.searchBar.returnKeyType = UIReturnKeyType.search
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesBottomBarWhenPushed = true
         searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
     }
     private func setupLoadingIndicator() {
         loadingIndicator.color = UIColor(named: "loading_indicator")
@@ -157,7 +164,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return results.count
+        return numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -182,16 +189,10 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         updateButtonIconState()
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("indexPath is\(indexPath)")
         if numberOfSelectedImages == 0 && indexPath.row == results.count - 1 && current_page < total_page {
             current_page = current_page + 1
-            networkDataFetcher.fetchImages(searchTerm: query, page: current_page) { (apiResponse) in
-                if let apiResponse = apiResponse {
-                    self.results.append(contentsOf: apiResponse.results)
-                    self.collectionView.reloadData()
-                } else {
-                    self.showToast(message: "Empty result".localized(), font: .systemFont(ofSize: 18.0))
-                }
-            }
+            callApi(query: query, page: current_page)
         }
     }
 }
@@ -208,13 +209,28 @@ extension PhotosViewController: UISearchBarDelegate {
         numberLabel.text = String(numberOfSelectedImages ?? 0)
         results.removeAll()
         collectionView.reloadData()
-        networkDataFetcher.fetchImages(searchTerm: query, page: current_page) { [self] (apiResponse) in
+        callApi(query: query, page: current_page)
+    }
+    func callApi(query: String, page: Int) {
+        var aux = page
+        networkDataFetcher.fetchImages(searchTerm: query, page: aux) { [self] (apiResponse) in
             if let apiResponse = apiResponse {
-                self.results = apiResponse.results.filter({ !self.filter.contains($0.id)})
-                self.collectionView?.reloadData()
-                self.loadingIndicator.stopAnimating()
+                let resultWithFilter = apiResponse.results.filter({ !self.filter.contains($0.id)})
+                print("Resultados para la pagina \(aux) -> \(resultWithFilter.count)")
+                if (resultWithFilter.isEmpty) {
+                    aux = aux + 1
+                    self.current_page = aux
+                    self.callApi(query: query, page: aux)
+                } else {
+                    let indexPath = IndexPath(row: self.results.count, section: 0)
+                    self.results.append(contentsOf: resultWithFilter)
+                    self.collectionView?.reloadData()
+                    self.loadingIndicator.stopAnimating()
+                    print("IndexPath -> \(indexPath)")
+                }
             }
             else {
+                self.loadingIndicator.stopAnimating()
                 self.showToast(message: "Empty result".localized(), font: .systemFont(ofSize: 18.0))
             }
         }
